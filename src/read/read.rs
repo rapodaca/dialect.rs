@@ -2,9 +2,8 @@ use lyn::Scanner;
 
 use super::{
     bond, bracket, cut, missing_character, selected_shortcut, shortcut, Error,
-    Follower, Reporter,
 };
-use crate::graph::{AtomKind, BondKind};
+use crate::graph::{AtomKind, BondKind, Follower, Reporter};
 
 pub fn read(string: &str, follower: &mut impl Follower) -> Result<(), Error> {
     let mut scanner = Scanner::new(string);

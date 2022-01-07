@@ -1,7 +1,4 @@
-use crate::{
-    graph::{AtomKind, BondKind, Cut},
-    read::Follower,
-};
+use crate::graph::{AtomKind, BondKind, Cut, Follower};
 
 #[derive(Debug, PartialEq)]
 pub struct Writer {
