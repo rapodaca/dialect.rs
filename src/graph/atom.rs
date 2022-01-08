@@ -1,4 +1,4 @@
-use super::{AtomKind, Element, Bond};
+use super::{AtomKind, Bond, Element};
 
 #[derive(Debug, PartialEq, Clone)]
 pub struct Atom {

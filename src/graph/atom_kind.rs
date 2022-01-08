@@ -30,7 +30,7 @@ impl AtomKind {
                 bracket.stereodescriptor = match bracket.stereodescriptor {
                     Some(Stereodescriptor::Th1) => Some(Stereodescriptor::Th2),
                     Some(Stereodescriptor::Th2) => Some(Stereodescriptor::Th1),
-                    None => None
+                    None => None,
                 };
             }
         }
@@ -66,14 +66,17 @@ mod tests {
 
         kind.invert_configuration();
 
-        assert_eq!(kind, AtomKind::Bracket(Bracket {
-            symbol: Symbol::Star,
-            isotope: None,
-            stereodescriptor: Some(Stereodescriptor::Th1),
-            virtual_hydrogen: None,
-            charge: None,
-            extension: None,
-        }))
+        assert_eq!(
+            kind,
+            AtomKind::Bracket(Bracket {
+                symbol: Symbol::Star,
+                isotope: None,
+                stereodescriptor: Some(Stereodescriptor::Th1),
+                virtual_hydrogen: None,
+                charge: None,
+                extension: None,
+            })
+        )
     }
 
     #[test]
@@ -89,13 +92,16 @@ mod tests {
 
         kind.invert_configuration();
 
-        assert_eq!(kind, AtomKind::Bracket(Bracket {
-            symbol: Symbol::Star,
-            isotope: None,
-            stereodescriptor: Some(Stereodescriptor::Th2),
-            virtual_hydrogen: Some(VirtualHydrogen::H1),
-            charge: None,
-            extension: None,
-        }))
+        assert_eq!(
+            kind,
+            AtomKind::Bracket(Bracket {
+                symbol: Symbol::Star,
+                isotope: None,
+                stereodescriptor: Some(Stereodescriptor::Th2),
+                virtual_hydrogen: Some(VirtualHydrogen::H1),
+                charge: None,
+                extension: None,
+            })
+        )
     }
 }

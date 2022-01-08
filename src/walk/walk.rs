@@ -117,7 +117,10 @@ fn walk_root<F: Follower>(
 mod tests {
     use super::*;
     use crate::{
-        graph::{Atom, AtomKind, Bond, BondKind, Bracket, Shortcut, Stereodescriptor, Symbol, VirtualHydrogen},
+        graph::{
+            Atom, AtomKind, Bond, BondKind, Bracket, Shortcut,
+            Stereodescriptor, Symbol, VirtualHydrogen,
+        },
         walk::Error,
         write::Writer,
     };
@@ -401,7 +404,7 @@ mod tests {
         let graph = vec![
             Atom {
                 kind: AtomKind::Star,
-                bonds: vec![ Bond::new(BondKind::Elided, 1) ]
+                bonds: vec![Bond::new(BondKind::Elided, 1)],
             },
             Atom {
                 kind: AtomKind::Bracket(Bracket {
@@ -416,21 +419,21 @@ mod tests {
                     Bond::new(BondKind::Elided, 0),
                     Bond::new(BondKind::Elided, 2),
                     Bond::new(BondKind::Elided, 3),
-                    Bond::new(BondKind::Elided, 4)
-                ]
+                    Bond::new(BondKind::Elided, 4),
+                ],
             },
             Atom {
                 kind: AtomKind::Star,
-                bonds: vec![ Bond::new(BondKind::Elided, 1) ]
+                bonds: vec![Bond::new(BondKind::Elided, 1)],
             },
             Atom {
                 kind: AtomKind::Star,
-                bonds: vec![ Bond::new(BondKind::Elided, 1) ]
+                bonds: vec![Bond::new(BondKind::Elided, 1)],
             },
             Atom {
                 kind: AtomKind::Star,
-                bonds: vec![ Bond::new(BondKind::Elided, 1) ]
-            }
+                bonds: vec![Bond::new(BondKind::Elided, 1)],
+            },
         ];
 
         walk(graph, &mut writer).unwrap();
@@ -444,7 +447,7 @@ mod tests {
         let graph = vec![
             Atom {
                 kind: AtomKind::Star,
-                bonds: vec![ Bond::new(BondKind::Elided, 1) ]
+                bonds: vec![Bond::new(BondKind::Elided, 1)],
             },
             Atom {
                 kind: AtomKind::Bracket(Bracket {
@@ -459,21 +462,21 @@ mod tests {
                     Bond::new(BondKind::Elided, 0),
                     Bond::new(BondKind::Elided, 2),
                     Bond::new(BondKind::Elided, 3),
-                    Bond::new(BondKind::Elided, 4)
-                ]
+                    Bond::new(BondKind::Elided, 4),
+                ],
             },
             Atom {
                 kind: AtomKind::Star,
-                bonds: vec![ Bond::new(BondKind::Elided, 1) ]
+                bonds: vec![Bond::new(BondKind::Elided, 1)],
             },
             Atom {
                 kind: AtomKind::Star,
-                bonds: vec![ Bond::new(BondKind::Elided, 1) ]
+                bonds: vec![Bond::new(BondKind::Elided, 1)],
             },
             Atom {
                 kind: AtomKind::Star,
-                bonds: vec![ Bond::new(BondKind::Elided, 1) ]
-            }
+                bonds: vec![Bond::new(BondKind::Elided, 1)],
+            },
         ];
 
         walk(graph, &mut writer).unwrap();
@@ -487,7 +490,7 @@ mod tests {
         let graph = vec![
             Atom {
                 kind: AtomKind::Star,
-                bonds: vec![ Bond::new(BondKind::Elided, 1) ]
+                bonds: vec![Bond::new(BondKind::Elided, 1)],
             },
             Atom {
                 kind: AtomKind::Bracket(Bracket {
@@ -502,21 +505,21 @@ mod tests {
                     Bond::new(BondKind::Elided, 2),
                     Bond::new(BondKind::Elided, 0),
                     Bond::new(BondKind::Elided, 3),
-                    Bond::new(BondKind::Elided, 4)
-                ]
+                    Bond::new(BondKind::Elided, 4),
+                ],
             },
             Atom {
                 kind: AtomKind::Star,
-                bonds: vec![ Bond::new(BondKind::Elided, 1) ]
+                bonds: vec![Bond::new(BondKind::Elided, 1)],
             },
             Atom {
                 kind: AtomKind::Star,
-                bonds: vec![ Bond::new(BondKind::Elided, 1) ]
+                bonds: vec![Bond::new(BondKind::Elided, 1)],
             },
             Atom {
                 kind: AtomKind::Star,
-                bonds: vec![ Bond::new(BondKind::Elided, 1) ]
-            }
+                bonds: vec![Bond::new(BondKind::Elided, 1)],
+            },
         ];
 
         walk(graph, &mut writer).unwrap();

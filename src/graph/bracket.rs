@@ -32,6 +32,6 @@ impl fmt::Display for Bracket {
 fn option_to_string<T: fmt::Display>(option: &Option<T>) -> String {
     match option {
         Some(option) => option.to_string(),
-        None => "".to_string()
+        None => "".to_string(),
     }
 }

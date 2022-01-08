@@ -1,12 +1,12 @@
-use std::collections::{ HashMap, BinaryHeap };
+use std::cmp::{Ord, Ordering};
 use std::collections::hash_map::Entry;
-use std::cmp::{ Ord, Ordering };
-use std::hash::{ Hash, Hasher };
+use std::collections::{BinaryHeap, HashMap};
 use std::convert::TryInto;
+use std::hash::{Hash, Hasher};
 
 use crate::graph::Cut;
 
-#[derive(Eq,PartialEq,PartialOrd)]
+#[derive(Eq, PartialEq, PartialOrd)]
 struct Index(u8);
 
 impl Ord for Index {
@@ -15,13 +15,13 @@ impl Ord for Index {
     }
 }
 
-#[derive(Debug,Eq)]
+#[derive(Debug, Eq)]
 struct Pair(usize, usize);
 
 impl PartialEq for Pair {
     fn eq(&self, other: &Self) -> bool {
-        (self.0.eq(&other.0) && self.1.eq(&other.1)) ||
-        (self.0.eq(&other.1) && self.1.eq(&other.0))
+        (self.0.eq(&other.0) && self.1.eq(&other.1))
+            || (self.0.eq(&other.1) && self.1.eq(&other.0))
     }
 }
 
@@ -34,7 +34,7 @@ impl Hash for Pair {
 pub struct JoinPool {
     counter: u8,
     borrowed: HashMap<Pair, u8>,
-    replaced: BinaryHeap<Index>
+    replaced: BinaryHeap<Index>,
 }
 
 impl JoinPool {
@@ -42,7 +42,7 @@ impl JoinPool {
         Self {
             counter: 1,
             borrowed: HashMap::new(),
-            replaced: BinaryHeap::new()
+            replaced: BinaryHeap::new(),
         }
     }
 
@@ -64,7 +64,7 @@ impl JoinPool {
                 self.replaced.push(Index(result));
 
                 result.try_into().expect("rnum")
-            },
+            }
             Entry::Vacant(vacant) => {
                 vacant.insert(next);
 

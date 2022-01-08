@@ -3,15 +3,12 @@ use super::BondKind;
 #[derive(Debug, PartialEq, Clone)]
 pub struct Bond {
     pub kind: BondKind,
-    pub tid: usize
+    pub tid: usize,
 }
 
 impl Bond {
     pub fn new(kind: BondKind, tid: usize) -> Self {
-        Self {
-            kind,
-            tid
-        }
+        Self { kind, tid }
     }
 
     pub fn is_directional(&self) -> bool {
