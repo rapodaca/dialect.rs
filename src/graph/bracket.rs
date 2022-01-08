@@ -18,16 +18,20 @@ impl fmt::Display for Bracket {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(
             f,
-            "[{}{}{}]",
-            match &self.isotope {
-                Some(isotope) => isotope.to_string(),
-                None => "".to_string(),
-            },
+            "[{}{}{}{}{}{}]",
+            option_to_string(&self.isotope),
             self.symbol.to_string(),
-            match &self.virtual_hydrogen {
-                Some(virtual_hydrogen) => virtual_hydrogen.to_string(),
-                None => "".to_string(),
-            }
+            option_to_string(&self.stereodescriptor),
+            option_to_string(&self.virtual_hydrogen),
+            option_to_string(&self.charge),
+            option_to_string(&self.extension)
         )
+    }
+}
+
+fn option_to_string<T: fmt::Display>(option: &Option<T>) -> String {
+    match option {
+        Some(option) => option.to_string(),
+        None => "".to_string()
     }
 }

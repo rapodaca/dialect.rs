@@ -24,3 +24,17 @@ impl fmt::Display for BondKind {
         }
     }
 }
+
+impl BondKind {
+    pub fn reverse(&self) -> Self {
+        match self {
+            BondKind::Elided => Self::Elided,
+            BondKind::Single => Self::Single,
+            BondKind::Double => Self::Double,
+            BondKind::Triple => Self::Triple,
+            BondKind::Quadruple => Self::Quadruple,
+            BondKind::Up => Self::Down,
+            BondKind::Down => Self::Up,
+        }
+    }
+}

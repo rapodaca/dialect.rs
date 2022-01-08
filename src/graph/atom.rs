@@ -1,7 +1,8 @@
-use super::{AtomKind, Element};
+use super::{AtomKind, Element, Bond};
 
 #[derive(Debug, PartialEq, Clone)]
 pub struct Atom {
+    pub bonds: Vec<Bond>,
     pub kind: AtomKind,
 }
 

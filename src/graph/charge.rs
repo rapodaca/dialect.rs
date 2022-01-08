@@ -1,3 +1,4 @@
+use core::fmt;
 use std::convert;
 
 use super::Error;
@@ -50,6 +51,33 @@ impl convert::TryFrom<i8> for Charge {
             8 => Ok(Charge::Plus8),
             9 => Ok(Charge::Plus9),
             _ => Err(Error::Range),
+        }
+    }
+}
+
+impl fmt::Display for Charge {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Charge::Minus9 => "-9".fmt(f),
+            Charge::Minus8 => "-8".fmt(f),
+            Charge::Minus7 => "-7".fmt(f),
+            Charge::Minus6 => "-6".fmt(f),
+            Charge::Minus5 => "-5".fmt(f),
+            Charge::Minus4 => "-4".fmt(f),
+            Charge::Minus3 => "-3".fmt(f),
+            Charge::Minus2 => "-2".fmt(f),
+            Charge::Minus1 => "-1".fmt(f),
+            Charge::Minus => "-".fmt(f),
+            Charge::Plus => "+".fmt(f),
+            Charge::Plus1 => "+1".fmt(f),
+            Charge::Plus2 => "+2".fmt(f),
+            Charge::Plus3 => "+3".fmt(f),
+            Charge::Plus4 => "+4".fmt(f),
+            Charge::Plus5 => "+5".fmt(f),
+            Charge::Plus6 => "+6".fmt(f),
+            Charge::Plus7 => "+7".fmt(f),
+            Charge::Plus8 => "+8".fmt(f),
+            Charge::Plus9 => "+9".fmt(f),
         }
     }
 }
