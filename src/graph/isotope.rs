@@ -19,6 +19,6 @@ impl convert::TryFrom<u16> for Isotope {
 
 impl fmt::Display for Isotope {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}", self.0)
+        self.0.fmt(f)
     }
 }

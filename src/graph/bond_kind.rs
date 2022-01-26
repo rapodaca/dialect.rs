@@ -38,3 +38,30 @@ impl BondKind {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use pretty_assertions::assert_eq;
+    use super::*;
+
+    #[test]
+    fn single() {
+        let kind = BondKind::Single;
+
+        assert_eq!(kind.reverse(), BondKind::Single)
+    }
+
+    #[test]
+    fn up() {
+        let kind = BondKind::Up;
+
+        assert_eq!(kind.reverse(), BondKind::Down)
+    }
+
+    #[test]
+    fn down() {
+        let kind = BondKind::Down;
+
+        assert_eq!(kind.reverse(), BondKind::Up)
+    }
+}

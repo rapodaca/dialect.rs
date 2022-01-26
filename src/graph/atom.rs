@@ -1,6 +1,6 @@
 use super::{AtomKind, Bond, Element};
 
-#[derive(Debug, PartialEq, Clone)]
+#[derive(Debug, PartialEq, Default, Clone)]
 pub struct Atom {
     pub bonds: Vec<Bond>,
     pub kind: AtomKind,
@@ -20,5 +20,81 @@ impl Atom {
                 }
             },
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use pretty_assertions::assert_eq;
+    use crate::graph::{Bracket, Shortcut, SelectedShortcut, Symbol, SelectedElement};
+
+    use super::*;
+
+    #[test]
+    fn star() {
+        let atom = Atom {
+            kind: AtomKind::Star,
+            ..Default::default()
+        };
+
+        assert_eq!(atom.element(), None)
+    }
+
+    #[test]
+    fn shortcut() {
+        let atom = Atom {
+            kind: AtomKind::Shortcut(Shortcut::C),
+            ..Default::default()
+        };
+
+        assert_eq!(atom.element(), Some(Element::C))
+    }
+
+    #[test]
+    fn selected_shortcut() {
+        let atom = Atom {
+            kind: AtomKind::SelectedShortcut(SelectedShortcut::C),
+            ..Default::default()
+        };
+
+        assert_eq!(atom.element(), Some(Element::C))
+    }
+
+    #[test]
+    fn bracket_star() {
+        let atom = Atom {
+            kind: AtomKind::Bracket(Bracket {
+                ..Default::default()
+            }),
+            ..Default::default()
+        };
+
+        assert_eq!(atom.element(), None)
+    }
+
+    #[test]
+    fn bracket_element() {
+        let atom = Atom {
+            kind: AtomKind::Bracket(Bracket {
+                symbol: Symbol::Element(Element::C),
+                ..Default::default()
+            }),
+            ..Default::default()
+        };
+
+        assert_eq!(atom.element(), Some(Element::C))
+    }
+
+    #[test]
+    fn bracket_selected_element() {
+        let atom = Atom {
+            kind: AtomKind::Bracket(Bracket {
+                symbol: Symbol::SelectedElement(SelectedElement::C),
+                ..Default::default()
+            }),
+            ..Default::default()
+        };
+
+        assert_eq!(atom.element(), Some(Element::C))
     }
 }

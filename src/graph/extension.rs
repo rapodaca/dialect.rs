@@ -11,6 +11,19 @@ impl convert::From<u16> for Extension {
 
 impl fmt::Display for Extension {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{:x}", self.0)
+        self.0.fmt(f)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use pretty_assertions::assert_eq;
+    use super::*;
+
+    #[test]
+    fn nine() {
+        let extension = Extension::from(9);
+
+        assert_eq!(extension.to_string(), "9")
     }
 }

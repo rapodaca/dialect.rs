@@ -24,7 +24,10 @@ impl fmt::Display for Bracket {
             option_to_string(&self.stereodescriptor),
             option_to_string(&self.virtual_hydrogen),
             option_to_string(&self.charge),
-            option_to_string(&self.extension)
+            match &self.extension {
+                Some(extension) => format!(":{}", extension),
+                None => "".to_string()
+            }
         )
     }
 }
@@ -33,5 +36,27 @@ fn option_to_string<T: fmt::Display>(option: &Option<T>) -> String {
     match option {
         Some(option) => option.to_string(),
         None => "".to_string(),
+    }
+}
+
+#[cfg(test)]
+mod to_string {
+    use pretty_assertions::assert_eq;
+    use crate::graph::Element;
+
+    use super::*;
+
+    #[test]
+    fn kitchen_sink() {
+        let bracket = Bracket {
+            symbol: Symbol::Element(Element::C),
+            isotope: Some(Isotope::try_from(13).unwrap()),
+            stereodescriptor: Some(Stereodescriptor::Th1),
+            virtual_hydrogen: Some(VirtualHydrogen::H),
+            charge: Some(Charge::Plus),
+            extension: Some(Extension::try_from(9).unwrap()),
+        };
+
+        assert_eq!(bracket.to_string(), "[13C@H+:9]")
     }
 }

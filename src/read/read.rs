@@ -437,4 +437,13 @@ mod tests {
 
         assert_eq!(writer.write(), "**(-*)(=*)*")
     }
+
+    #[test]
+    fn branch_ordering() {
+        let mut writer = Writer::new();
+
+        read("C(F)Cl", &mut writer).unwrap();
+
+        assert_eq!(writer.write(), "C(F)Cl")
+    }
 }

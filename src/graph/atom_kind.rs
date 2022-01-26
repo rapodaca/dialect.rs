@@ -10,6 +10,12 @@ pub enum AtomKind {
     Bracket(Bracket),
 }
 
+impl Default for AtomKind {
+    fn default() -> Self {
+        Self::Star
+    }
+}
+
 impl fmt::Display for AtomKind {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
