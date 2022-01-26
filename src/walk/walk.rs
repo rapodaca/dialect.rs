@@ -526,4 +526,45 @@ mod tests {
 
         assert_eq!(writer.write(), "*[*@H](*)(*)*")
     }
+
+    #[test]
+    fn diamond() {
+        let mut writer = Writer::new();
+        let graph = vec![
+            Atom {
+                kind: AtomKind::Star,
+                bonds: vec![
+                    Bond::new(BondKind::Elided, 1),
+                    Bond::new(BondKind::Elided, 3)
+                ]
+            },
+            Atom {
+                kind: AtomKind::Star,
+                bonds: vec![
+                    Bond::new(BondKind::Elided, 2),
+                    Bond::new(BondKind::Elided, 3),
+                    Bond::new(BondKind::Elided, 0)
+                ]
+            },
+            Atom {
+                kind: AtomKind::Star,
+                bonds: vec![
+                    Bond::new(BondKind::Elided, 3),
+                    Bond::new(BondKind::Elided, 1)
+                ]
+            },
+            Atom {
+                kind: AtomKind::Star,
+                bonds: vec![
+                    Bond::new(BondKind::Elided, 0),
+                    Bond::new(BondKind::Elided, 1),
+                    Bond::new(BondKind::Elided, 2)
+                ]
+            }
+        ];
+
+        walk(graph, &mut writer).unwrap();
+
+        assert_eq!(writer.write(), "*(*(**12)2)1")
+    }
 }
