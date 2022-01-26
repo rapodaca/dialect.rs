@@ -25,8 +25,10 @@ impl Atom {
 
 #[cfg(test)]
 mod tests {
+    use crate::graph::{
+        Bracket, SelectedElement, SelectedShortcut, Shortcut, Symbol,
+    };
     use pretty_assertions::assert_eq;
-    use crate::graph::{Bracket, Shortcut, SelectedShortcut, Symbol, SelectedElement};
 
     use super::*;
 

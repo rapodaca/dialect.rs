@@ -17,8 +17,8 @@ impl fmt::Display for Extension {
 
 #[cfg(test)]
 mod tests {
-    use pretty_assertions::assert_eq;
     use super::*;
+    use pretty_assertions::assert_eq;
 
     #[test]
     fn nine() {

@@ -26,7 +26,7 @@ impl fmt::Display for Bracket {
             option_to_string(&self.charge),
             match &self.extension {
                 Some(extension) => format!(":{}", extension),
-                None => "".to_string()
+                None => "".to_string(),
             }
         )
     }
@@ -41,8 +41,8 @@ fn option_to_string<T: fmt::Display>(option: &Option<T>) -> String {
 
 #[cfg(test)]
 mod to_string {
-    use pretty_assertions::assert_eq;
     use crate::graph::Element;
+    use pretty_assertions::assert_eq;
 
     use super::*;
 

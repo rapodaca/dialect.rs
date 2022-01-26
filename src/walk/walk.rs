@@ -535,32 +535,32 @@ mod tests {
                 kind: AtomKind::Star,
                 bonds: vec![
                     Bond::new(BondKind::Elided, 1),
-                    Bond::new(BondKind::Elided, 3)
-                ]
+                    Bond::new(BondKind::Elided, 3),
+                ],
             },
             Atom {
                 kind: AtomKind::Star,
                 bonds: vec![
                     Bond::new(BondKind::Elided, 2),
                     Bond::new(BondKind::Elided, 3),
-                    Bond::new(BondKind::Elided, 0)
-                ]
+                    Bond::new(BondKind::Elided, 0),
+                ],
             },
             Atom {
                 kind: AtomKind::Star,
                 bonds: vec![
                     Bond::new(BondKind::Elided, 3),
-                    Bond::new(BondKind::Elided, 1)
-                ]
+                    Bond::new(BondKind::Elided, 1),
+                ],
             },
             Atom {
                 kind: AtomKind::Star,
                 bonds: vec![
                     Bond::new(BondKind::Elided, 0),
                     Bond::new(BondKind::Elided, 1),
-                    Bond::new(BondKind::Elided, 2)
-                ]
-            }
+                    Bond::new(BondKind::Elided, 2),
+                ],
+            },
         ];
 
         walk(graph, &mut writer).unwrap();

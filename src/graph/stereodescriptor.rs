@@ -8,9 +8,13 @@ pub enum Stereodescriptor {
 
 impl fmt::Display for Stereodescriptor {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}", match self {
-            Self::Th1 => "@",
-            Self::Th2 => "@@"
-        })
+        write!(
+            f,
+            "{}",
+            match self {
+                Self::Th1 => "@",
+                Self::Th2 => "@@",
+            }
+        )
     }
 }
