@@ -1,11 +1,19 @@
 use std::{convert, fmt};
 
+use super::Error;
+
 #[derive(Debug, PartialEq, Clone)]
 pub struct Extension(u16);
 
-impl convert::From<u16> for Extension {
-    fn from(value: u16) -> Self {
-        Extension(value)
+impl convert::TryFrom<u16> for Extension {
+    type Error = Error;
+
+    fn try_from(value: u16) -> Result<Self, Self::Error> {
+        if value > 9999 {
+            Err(Self::Error::Range)
+        } else {
+            Ok(Self(value))
+        }
     }
 }
 
@@ -22,8 +30,15 @@ mod tests {
 
     #[test]
     fn nine() {
-        let extension = Extension::from(9);
+        let extension = Extension::try_from(9).unwrap();
 
         assert_eq!(extension.to_string(), "9")
+    }
+
+    #[test]
+    fn ten() {
+        let extension = Extension::try_from(10).unwrap();
+
+        assert_eq!(extension.to_string(), "10")
     }
 }

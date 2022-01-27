@@ -1,6 +1,6 @@
 use lyn::{Action, Scanner};
 
-use super::{digit, element, hex, missing_character, non_zero, Error};
+use super::{element, missing_character, non_zero, uint16, Error};
 use crate::graph::{
     Bracket, Charge, Extension, Isotope, SelectedElement, Stereodescriptor,
     Symbol, VirtualHydrogen,
@@ -20,7 +20,7 @@ pub fn bracket(scanner: &mut Scanner) -> Result<Option<Bracket>, Error> {
         stereodescriptor: stereodescriptor(scanner),
         virtual_hydrogen: virtual_hydrogen(scanner),
         charge: charge(scanner),
-        extension: extension(scanner),
+        extension: extension(scanner)?,
     }));
 
     if scanner.take(&']') {
@@ -31,20 +31,10 @@ pub fn bracket(scanner: &mut Scanner) -> Result<Option<Bracket>, Error> {
 }
 
 fn isotope(scanner: &mut Scanner) -> Option<Isotope> {
-    let mass_number = match non_zero(scanner) {
-        Some(first) => match digit(scanner) {
-            Some(second) => match digit(scanner) {
-                Some(third) => {
-                    100 * first as u16 + 10 * second as u16 + third as u16
-                }
-                None => second as u16 + 10 * first as u16,
-            },
-            None => first as u16,
-        },
-        None => return None,
-    };
-
-    Some(Isotope::try_from(mass_number).expect("isotope"))
+    match uint16(scanner, 3) {
+        Some(number) => Some(number.try_into().expect("isotope")),
+        None => None,
+    }
 }
 
 fn symbol(scanner: &mut Scanner) -> Result<Option<Symbol>, Error> {
@@ -115,32 +105,16 @@ fn charge(scanner: &mut Scanner) -> Option<Charge> {
     }
 }
 
-fn extension(scanner: &mut Scanner) -> Option<Extension> {
+fn extension(scanner: &mut Scanner) -> Result<Option<Extension>, Error> {
     if !scanner.take(&':') {
-        return None;
+        return Ok(None);
     }
 
-    match hex(scanner) {
-        Some(first) => match hex(scanner) {
-            Some(second) => match hex(scanner) {
-                Some(third) => match hex(scanner) {
-                    Some(fourth) => Some(Extension::from(
-                        first as u16 * 4096
-                            + second as u16 * 256
-                            + third as u16 * 16
-                            + fourth as u16,
-                    )),
-                    None => Some(Extension::from(
-                        first as u16 * 256 + second as u16 * 16 + third as u16,
-                    )),
-                },
-                None => {
-                    Some(Extension::from(first as u16 * 16 + second as u16))
-                }
-            },
-            None => Some(Extension::from(first as u16)),
-        },
-        None => None,
+    match uint16(scanner, 4) {
+        Some(number) => {
+            Ok(Some(number.try_into().expect("extension overflow")))
+        }
+        None => Err(missing_character(scanner)),
     }
 }
 
@@ -193,6 +167,13 @@ mod tests {
     }
 
     #[test]
+    fn open_symbol_extension_close() {
+        let mut scanner = Scanner::new("[C:]");
+
+        assert_eq!(bracket(&mut scanner), Err(Error::Character(3)))
+    }
+
+    #[test]
     fn isotope_overflow() {
         let mut scanner = Scanner::new("[1234C]");
 
@@ -207,8 +188,15 @@ mod tests {
     }
 
     #[test]
+    fn extension_bad_character() {
+        let mut scanner = Scanner::new("[C:a00]");
+
+        assert_eq!(bracket(&mut scanner), Err(Error::Character(3)))
+    }
+
+    #[test]
     fn extension_overflow() {
-        let mut scanner = Scanner::new("[C:ffff0]");
+        let mut scanner = Scanner::new("[C:99990]");
 
         assert_eq!(bracket(&mut scanner), Err(Error::Character(7)))
     }
@@ -303,14 +291,28 @@ mod tests {
     }
 
     #[test]
-    fn element_with_extension() {
-        let mut scanner = Scanner::new("[C:ffff]");
+    fn element_extension() {
+        let mut scanner = Scanner::new("[C:9999]");
 
         assert_eq!(
             bracket(&mut scanner),
             Ok(Some(Bracket {
                 symbol: Symbol::Element(Element::C),
-                extension: Some(0xffff.into()),
+                extension: Some(9999.try_into().unwrap()),
+                ..Default::default()
+            }))
+        )
+    }
+
+    #[test]
+    fn element_extension_leading_zero() {
+        let mut scanner = Scanner::new("[C:01]");
+
+        assert_eq!(
+            bracket(&mut scanner),
+            Ok(Some(Bracket {
+                symbol: Symbol::Element(Element::C),
+                extension: Some(1.try_into().unwrap()),
                 ..Default::default()
             }))
         )
@@ -318,7 +320,7 @@ mod tests {
 
     #[test]
     fn kitchen_sink() {
-        let mut scanner = Scanner::new("[12C@H1+2:abcd]");
+        let mut scanner = Scanner::new("[12C@H1+2:1234]");
 
         assert_eq!(
             bracket(&mut scanner),
@@ -328,7 +330,7 @@ mod tests {
                 stereodescriptor: Some(Stereodescriptor::Th1),
                 virtual_hydrogen: Some(VirtualHydrogen::H1),
                 charge: Some(Charge::Plus2),
-                extension: Some(0xabcd.into())
+                extension: Some(1234.try_into().unwrap())
             }))
         )
     }

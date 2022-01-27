@@ -54,9 +54,9 @@ mod to_string {
             stereodescriptor: Some(Stereodescriptor::Th1),
             virtual_hydrogen: Some(VirtualHydrogen::H),
             charge: Some(Charge::Plus),
-            extension: Some(Extension::try_from(9).unwrap()),
+            extension: Some(Extension::try_from(10).unwrap()),
         };
 
-        assert_eq!(bracket.to_string(), "[13C@H+:9]")
+        assert_eq!(bracket.to_string(), "[13C@H+:10]")
     }
 }
