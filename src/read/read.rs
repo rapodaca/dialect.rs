@@ -3,13 +3,12 @@ use lyn::Scanner;
 use super::{
     bond, bracket, cut, missing_character, selected_shortcut, shortcut, Error,
 };
-use crate::graph::{AtomKind, BondKind, Follower, Reporter};
+use crate::graph::{AtomKind, BondKind, Follower};
 
 pub fn read(string: &str, follower: &mut impl Follower) -> Result<(), Error> {
     let mut scanner = Scanner::new(string);
-    let mut reporter = Reporter::new(follower);
 
-    sequence(None, &mut scanner, &mut reporter)?;
+    sequence(None, &mut scanner, follower)?;
 
     if scanner.is_done() {
         Ok(())
@@ -21,7 +20,7 @@ pub fn read(string: &str, follower: &mut impl Follower) -> Result<(), Error> {
 fn sequence<F: Follower>(
     input: Option<&BondKind>,
     scanner: &mut Scanner,
-    reporter: &mut Reporter<F>,
+    reporter: &mut F,
 ) -> Result<bool, Error> {
     let atom_kind = match atom(scanner)? {
         Some(kind) => kind,
@@ -47,7 +46,7 @@ fn sequence<F: Follower>(
 
 fn union<F: Follower>(
     scanner: &mut Scanner,
-    reporter: &mut Reporter<F>,
+    reporter: &mut F,
 ) -> Result<bool, Error> {
     match bond(scanner) {
         Some(bond_kind) => {
@@ -64,7 +63,7 @@ fn union<F: Follower>(
 fn cut_or_sequence<F: Follower>(
     bond_kind: &BondKind,
     scanner: &mut Scanner,
-    reporter: &mut Reporter<F>,
+    reporter: &mut F,
 ) -> Result<bool, Error> {
     if let Some(cut) = cut(scanner)? {
         reporter.join(bond_kind, &cut);
@@ -77,13 +76,13 @@ fn cut_or_sequence<F: Follower>(
 
 fn branch<F: Follower>(
     scanner: &mut Scanner,
-    reporter: &mut Reporter<F>,
+    reporter: &mut F,
 ) -> Result<bool, Error> {
     if !scanner.take(&'(') {
         return Ok(false);
     }
 
-    let start = reporter.chain_length();
+    reporter.push();
 
     if scanner.take(&'.') {
         if !sequence(None, scanner, reporter)? {
@@ -101,7 +100,7 @@ fn branch<F: Follower>(
     }
 
     if scanner.take(&')') {
-        reporter.pop(reporter.chain_length() - start);
+        reporter.pop();
 
         Ok(true)
     } else {
@@ -111,7 +110,7 @@ fn branch<F: Follower>(
 
 fn split<F: Follower>(
     scanner: &mut Scanner,
-    reporter: &mut Reporter<F>,
+    reporter: &mut F,
 ) -> Result<bool, Error> {
     if !scanner.take(&'.') {
         return Ok(false);

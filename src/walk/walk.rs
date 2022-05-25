@@ -33,62 +33,50 @@ fn walk_root<F: Follower>(
     pool: &mut JoinPool,
 ) -> Result<(), Error> {
     let mut stack = Vec::new();
-    let mut chain = Vec::new();
+    let degree = parent.bonds.len();
 
-    for bond in parent.bonds.into_iter().rev() {
-        stack.push((pid, bond))
+    for (i, bond) in parent.bonds.into_iter().rev().enumerate() {
+        stack.push((pid, degree > 1 && i != 0, bond));
     }
 
     follower.root(&parent.kind);
-    chain.push(pid);
 
-    while let Some((sid, bond)) = stack.pop() {
+    let mut rid = pid;
+
+    while let Some((sid, push, bond)) = stack.pop() {
         if bond.tid >= size {
             return Err(Error::UnknownTarget(sid, bond.tid));
         } else if bond.tid == sid {
             return Err(Error::Loop(sid));
         }
 
-        let mut popcount = 0;
-
-        loop {
-            let head = *chain.last().expect("chain head");
-
-            if head == sid {
-                break;
-            }
-
-            chain.pop();
-
-            popcount += 1
-        }
-
-        if popcount > 0 {
-            follower.pop(popcount)
+        if rid != sid {
+            follower.pop();
         }
 
         match atoms.remove(&bond.tid) {
             Some(mut child) => {
+                rid = bond.tid;
+
+                if push {
+                    follower.push();
+                }
+
+                let degree = child.bonds.len();
                 let mut back = None;
 
-                for (out_index, out) in
-                    child.bonds.into_iter().enumerate().rev()
-                {
+                for (i, out) in child.bonds.into_iter().rev().enumerate() {
                     if out.tid == sid {
-                        if out_index % 2 == 0 {
+                        if i % 2 == 1 {
                             child.kind.invert_configuration()
                         }
 
-                        if back.is_none() {
-                            back = Some(out);
-                        } else {
+                        if back.replace(out).is_some() {
                             return Err(Error::DuplicateBond(sid, bond.tid));
                         }
-
-                        continue;
+                    } else {
+                        stack.push((bond.tid, degree > 2 && i != 0, out));
                     }
-
-                    stack.push((bond.tid, out));
                 }
 
                 if let Some(back) = back {
@@ -103,10 +91,11 @@ fn walk_root<F: Follower>(
                     return Err(Error::HalfBond(sid, bond.tid));
                 }
 
-                chain.push(bond.tid);
-                follower.extend(&bond.kind, &child.kind)
+                follower.extend(&bond.kind, &child.kind);
             }
-            None => follower.join(&bond.kind, &pool.hit(sid, bond.tid)),
+            None => {
+                follower.join(&bond.kind, &pool.hit(sid, bond.tid));
+            }
         }
     }
 
@@ -321,6 +310,38 @@ mod tests {
         walk(graph, &mut writer).unwrap();
 
         assert_eq!(writer.write(), "*(-*)=*")
+    }
+
+    #[test]
+    fn c3_simple() {
+        let mut writer = Writer::new();
+        let graph = vec![
+            Atom {
+                kind: AtomKind::Star,
+                bonds: vec![
+                    Bond::new(BondKind::Elided, 1),
+                    Bond::new(BondKind::Elided, 2),
+                ],
+            },
+            Atom {
+                kind: AtomKind::Star,
+                bonds: vec![
+                    Bond::new(BondKind::Elided, 2),
+                    Bond::new(BondKind::Elided, 0),
+                ],
+            },
+            Atom {
+                kind: AtomKind::Star,
+                bonds: vec![
+                    Bond::new(BondKind::Elided, 0),
+                    Bond::new(BondKind::Elided, 1),
+                ],
+            },
+        ];
+
+        walk(graph, &mut writer).unwrap();
+
+        assert_eq!(writer.write(), "*(**1)1")
     }
 
     #[test]

@@ -7,5 +7,7 @@ pub trait Follower {
 
     fn join(&mut self, bond_kind: &BondKind, cut: &Cut);
 
-    fn pop(&mut self, depth: usize);
+    fn push(&mut self);
+
+    fn pop(&mut self);
 }
