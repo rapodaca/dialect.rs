@@ -11,13 +11,11 @@ impl Atom {
         match &self.kind {
             AtomKind::Star => None,
             AtomKind::Shortcut(shortcut) => Some(shortcut.into()),
-            AtomKind::SelectedShortcut(selected) => Some(selected.into()),
+            AtomKind::Selection(selection) => Some(selection.into()),
             AtomKind::Bracket(bracket) => match &bracket.symbol {
                 super::Symbol::Star => None,
                 super::Symbol::Element(element) => Some(element.clone()),
-                super::Symbol::SelectedElement(selected) => {
-                    Some(selected.into())
-                }
+                super::Symbol::Selection(selection) => Some(selection.into()),
             },
         }
     }
@@ -25,9 +23,7 @@ impl Atom {
 
 #[cfg(test)]
 mod tests {
-    use crate::graph::{
-        Bracket, SelectedElement, SelectedShortcut, Shortcut, Symbol,
-    };
+    use crate::graph::{Bracket, Selection, Shortcut, Symbol};
     use pretty_assertions::assert_eq;
 
     use super::*;
@@ -55,7 +51,7 @@ mod tests {
     #[test]
     fn selected_shortcut() {
         let atom = Atom {
-            kind: AtomKind::SelectedShortcut(SelectedShortcut::C),
+            kind: AtomKind::Selection(Selection::C),
             ..Default::default()
         };
 
@@ -91,7 +87,7 @@ mod tests {
     fn bracket_selected_element() {
         let atom = Atom {
             kind: AtomKind::Bracket(Bracket {
-                symbol: Symbol::SelectedElement(SelectedElement::C),
+                symbol: Symbol::Selection(Selection::C),
                 ..Default::default()
             }),
             ..Default::default()

@@ -2,8 +2,8 @@ use lyn::{Action, Scanner};
 
 use super::{element, missing_character, non_zero, uint16, Error};
 use crate::graph::{
-    Bracket, Charge, Extension, Isotope, SelectedElement, Stereodescriptor,
-    Symbol, VirtualHydrogen,
+    Bracket, Charge, Extension, Isotope, Selection, Stereodescriptor, Symbol,
+    VirtualHydrogen,
 };
 
 pub fn bracket(scanner: &mut Scanner) -> Result<Option<Bracket>, Error> {
@@ -40,8 +40,8 @@ fn isotope(scanner: &mut Scanner) -> Option<Isotope> {
 fn symbol(scanner: &mut Scanner) -> Result<Option<Symbol>, Error> {
     if let Some(element) = element(scanner)? {
         Ok(Some(Symbol::Element(element)))
-    } else if let Some(selected_element) = selected_element(scanner)? {
-        Ok(Some(Symbol::SelectedElement(selected_element)))
+    } else if let Some(selection) = selected_element(scanner)? {
+        Ok(Some(Symbol::Selection(selection)))
     } else if star(scanner) {
         Ok(Some(Symbol::Star))
     } else {
@@ -49,11 +49,9 @@ fn symbol(scanner: &mut Scanner) -> Result<Option<Symbol>, Error> {
     }
 }
 
-fn selected_element(
-    scanner: &mut Scanner,
-) -> Result<Option<SelectedElement>, Error> {
+fn selected_element(scanner: &mut Scanner) -> Result<Option<Selection>, Error> {
     Ok(scanner.scan(|symbol| match symbol {
-        "c" => Some(Action::Return(SelectedElement::C)),
+        "c" => Some(Action::Return(Selection::C)),
         _ => None,
     })?)
 }
@@ -221,7 +219,7 @@ mod tests {
         assert_eq!(
             bracket(&mut scanner),
             Ok(Some(Bracket {
-                symbol: Symbol::SelectedElement(SelectedElement::C),
+                symbol: Symbol::Selection(Selection::C),
                 ..Default::default()
             }))
         )

@@ -1,6 +1,6 @@
 use std::fmt;
 
-use super::{SelectedElement, SelectedShortcut, Shortcut};
+use super::{Selection, Shortcut};
 
 #[derive(Debug, PartialEq, Clone)]
 pub enum Element {
@@ -142,30 +142,14 @@ impl std::convert::From<&Shortcut> for Element {
     }
 }
 
-impl std::convert::From<&SelectedShortcut> for Element {
-    fn from(shortcut: &SelectedShortcut) -> Self {
-        match shortcut {
-            SelectedShortcut::B => Self::B,
-            SelectedShortcut::C => Self::C,
-            SelectedShortcut::N => Self::N,
-            SelectedShortcut::O => Self::O,
-            SelectedShortcut::P => Self::P,
-            SelectedShortcut::S => Self::S,
-        }
-    }
-}
-
-impl std::convert::From<&SelectedElement> for Element {
-    fn from(element: &SelectedElement) -> Self {
+impl std::convert::From<&Selection> for Element {
+    fn from(element: &Selection) -> Self {
         match element {
-            SelectedElement::B => Element::B,
-            SelectedElement::C => Element::C,
-            SelectedElement::N => Element::N,
-            SelectedElement::O => Element::O,
-            SelectedElement::P => Element::P,
-            SelectedElement::S => Element::S,
-            SelectedElement::Se => Element::Se,
-            SelectedElement::As => Element::As,
+            Selection::C => Element::C,
+            Selection::N => Element::N,
+            Selection::O => Element::O,
+            Selection::P => Element::P,
+            Selection::S => Element::S,
         }
     }
 }

@@ -1,12 +1,12 @@
 use std::fmt;
 
-use super::{Bracket, SelectedShortcut, Shortcut, Stereodescriptor};
+use super::{Bracket, Selection, Shortcut, Stereodescriptor};
 
 #[derive(Debug, PartialEq, Clone)]
 pub enum AtomKind {
     Star,
     Shortcut(Shortcut),
-    SelectedShortcut(SelectedShortcut),
+    Selection(Selection),
     Bracket(Bracket),
 }
 
@@ -21,7 +21,7 @@ impl fmt::Display for AtomKind {
         match self {
             Self::Star => write!(f, "*"),
             Self::Shortcut(shortcut) => shortcut.fmt(f),
-            Self::SelectedShortcut(selected) => selected.fmt(f),
+            Self::Selection(selection) => selection.fmt(f),
             Self::Bracket(bracket) => bracket.fmt(f),
         }
     }

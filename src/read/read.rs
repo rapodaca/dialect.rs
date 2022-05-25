@@ -1,7 +1,7 @@
 use lyn::Scanner;
 
 use super::{
-    bond, bracket, cut, missing_character, selected_shortcut, shortcut, Error,
+    bond, bracket, cut, missing_character, selection, shortcut, Error,
 };
 use crate::graph::{AtomKind, BondKind, Follower};
 
@@ -128,8 +128,8 @@ fn atom(scanner: &mut Scanner) -> Result<Option<AtomKind>, Error> {
         Ok(Some(AtomKind::Star))
     } else if let Some(shortcut) = shortcut(scanner)? {
         Ok(Some(AtomKind::Shortcut(shortcut)))
-    } else if let Some(selected) = selected_shortcut(scanner) {
-        Ok(Some(AtomKind::SelectedShortcut(selected)))
+    } else if let Some(selection) = selection(scanner) {
+        Ok(Some(AtomKind::Selection(selection)))
     } else if let Some(bracket) = bracket(scanner)? {
         Ok(Some(AtomKind::Bracket(bracket)))
     } else {

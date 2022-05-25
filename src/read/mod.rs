@@ -7,7 +7,7 @@ mod error;
 mod missing_character;
 mod non_zero;
 mod read;
-mod selected_shortcut;
+mod selection;
 mod shortcut;
 mod uint16;
 
@@ -20,6 +20,6 @@ pub use error::Error;
 pub use missing_character::missing_character;
 pub use non_zero::non_zero;
 pub use read::read;
-pub use selected_shortcut::selected_shortcut;
+pub use selection::selection;
 pub use shortcut::shortcut;
 pub use uint16::uint16;

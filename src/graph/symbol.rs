@@ -1,12 +1,12 @@
 use std::fmt;
 
-use super::{Element, SelectedElement};
+use super::{Element, Selection};
 
 #[derive(Debug, PartialEq, Clone)]
 pub enum Symbol {
     Star,
     Element(Element),
-    SelectedElement(SelectedElement),
+    Selection(Selection),
 }
 
 impl fmt::Display for Symbol {
@@ -14,7 +14,7 @@ impl fmt::Display for Symbol {
         match self {
             Self::Star => write!(f, "*"),
             Self::Element(element) => element.fmt(f),
-            Self::SelectedElement(element) => element.fmt(f),
+            Self::Selection(selection) => selection.fmt(f),
         }
     }
 }
