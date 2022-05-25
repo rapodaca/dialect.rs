@@ -12,8 +12,6 @@ pub fn shortcut(scanner: &mut Scanner) -> Result<Option<Shortcut>, lyn::Error> {
         "O" => Some(Action::Return(Shortcut::O)),
         "F" => Some(Action::Return(Shortcut::F)),
         "I" => Some(Action::Return(Shortcut::I)),
-        "At" => Some(Action::Return(Shortcut::At)),
-        "Ts" => Some(Action::Return(Shortcut::Ts)),
         "P" => Some(Action::Return(Shortcut::P)),
         "S" => Some(Action::Return(Shortcut::S)),
         _ => None,

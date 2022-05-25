@@ -10,8 +10,6 @@ pub enum Shortcut {
     Cl,
     Br,
     I,
-    At,
-    Ts,
     P,
     S,
 }
@@ -30,8 +28,6 @@ impl fmt::Display for Shortcut {
                 Self::Cl => "Cl",
                 Self::Br => "Br",
                 Self::I => "I",
-                Self::At => "At",
-                Self::Ts => "Ts",
                 Self::P => "P",
                 Self::S => "S",
             }

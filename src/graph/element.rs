@@ -136,8 +136,6 @@ impl std::convert::From<&Shortcut> for Element {
             Shortcut::Cl => Element::Cl,
             Shortcut::Br => Element::Br,
             Shortcut::I => Element::I,
-            Shortcut::At => Element::At,
-            Shortcut::Ts => Element::Ts,
             Shortcut::P => Element::P,
             Shortcut::S => Element::S,
         }
