@@ -6,7 +6,6 @@ pub enum BondKind {
     Single,
     Double,
     Triple,
-    Quadruple,
     Up,
     Down,
 }
@@ -18,7 +17,6 @@ impl fmt::Display for BondKind {
             Self::Single => write!(f, "-"),
             Self::Double => write!(f, "="),
             Self::Triple => write!(f, "#"),
-            Self::Quadruple => write!(f, "$"),
             Self::Up => write!(f, "/"),
             Self::Down => write!(f, "\\"),
         }
@@ -32,7 +30,6 @@ impl BondKind {
             BondKind::Single => Self::Single,
             BondKind::Double => Self::Double,
             BondKind::Triple => Self::Triple,
-            BondKind::Quadruple => Self::Quadruple,
             BondKind::Up => Self::Down,
             BondKind::Down => Self::Up,
         }

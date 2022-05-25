@@ -7,7 +7,6 @@ pub fn bond(scanner: &mut Scanner) -> Option<BondKind> {
         '-' => Some(BondKind::Single),
         '=' => Some(BondKind::Double),
         '#' => Some(BondKind::Triple),
-        '$' => Some(BondKind::Quadruple),
         '/' => Some(BondKind::Up),
         '\\' => Some(BondKind::Down),
         _ => None,
