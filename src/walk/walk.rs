@@ -402,7 +402,7 @@ mod tests {
                 kind: AtomKind::Bracket(Bracket {
                     symbol: Symbol::Star,
                     isotope: None,
-                    stereodescriptor: Some(Stereodescriptor::Th1),
+                    stereodescriptor: Some(Stereodescriptor::Left),
                     virtual_hydrogen: None,
                     charge: None,
                     extension: None,
@@ -449,7 +449,7 @@ mod tests {
                 kind: AtomKind::Bracket(Bracket {
                     symbol: Symbol::Star,
                     isotope: None,
-                    stereodescriptor: Some(Stereodescriptor::Th1),
+                    stereodescriptor: Some(Stereodescriptor::Left),
                     virtual_hydrogen: None,
                     charge: None,
                     extension: None,
@@ -492,7 +492,7 @@ mod tests {
                 kind: AtomKind::Bracket(Bracket {
                     symbol: Symbol::Star,
                     isotope: None,
-                    stereodescriptor: Some(Stereodescriptor::Th1),
+                    stereodescriptor: Some(Stereodescriptor::Left),
                     virtual_hydrogen: Some(VirtualHydrogen::H),
                     charge: None,
                     extension: None,
@@ -535,7 +535,7 @@ mod tests {
                 kind: AtomKind::Bracket(Bracket {
                     symbol: Symbol::Star,
                     isotope: None,
-                    stereodescriptor: Some(Stereodescriptor::Th1),
+                    stereodescriptor: Some(Stereodescriptor::Left),
                     virtual_hydrogen: Some(VirtualHydrogen::H),
                     charge: None,
                     extension: None,

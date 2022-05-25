@@ -63,9 +63,9 @@ fn star(scanner: &mut Scanner) -> bool {
 fn stereodescriptor(scanner: &mut Scanner) -> Option<Stereodescriptor> {
     if scanner.take(&'@') {
         if scanner.take(&'@') {
-            Some(Stereodescriptor::Th2)
+            Some(Stereodescriptor::Right)
         } else {
-            Some(Stereodescriptor::Th1)
+            Some(Stereodescriptor::Left)
         }
     } else {
         None
@@ -254,7 +254,7 @@ mod tests {
             bracket(&mut scanner),
             Ok(Some(Bracket {
                 symbol: Symbol::Element(Element::C),
-                stereodescriptor: Some(Stereodescriptor::Th1),
+                stereodescriptor: Some(Stereodescriptor::Left),
                 ..Default::default()
             }))
         )
@@ -325,7 +325,7 @@ mod tests {
             Ok(Some(Bracket {
                 symbol: Symbol::Element(Element::C),
                 isotope: Some(Isotope::try_from(12).unwrap()),
-                stereodescriptor: Some(Stereodescriptor::Th1),
+                stereodescriptor: Some(Stereodescriptor::Left),
                 virtual_hydrogen: Some(VirtualHydrogen::H1),
                 charge: Some(Charge::Plus2),
                 extension: Some(1234.try_into().unwrap())
