@@ -1,8 +1,9 @@
 #[derive(Debug, PartialEq)]
 pub enum Error {
-    DuplicateBond(usize, usize),
-    HalfBond(usize, usize),
-    IncompatibleBond(usize, usize),
-    Loop(usize),
-    UnknownTarget(usize, usize),
+    DuplicateBond(u32, u32),
+    HalfBond(u32, u32),
+    IncompatibleBond(u32, u32),
+    Loop(u32),
+    UnknownTarget(u32, u32),
+    TooManyAtoms,
 }

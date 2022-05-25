@@ -8,8 +8,8 @@ pub fn walk(
     graph: Vec<Atom>,
     follower: &mut impl Follower,
 ) -> Result<(), Error> {
-    let size = graph.len();
-    let mut atoms = graph.into_iter().enumerate().collect::<HashMap<_, _>>();
+    let size = id(graph.len()).ok_or(Error::TooManyAtoms)?;
+    let mut atoms = map_atoms(graph)?;
     let mut pool = JoinPool::new();
 
     for id in 0..size {
@@ -25,10 +25,10 @@ pub fn walk(
 }
 
 fn walk_root<F: Follower>(
-    pid: usize,
+    pid: u32,
     parent: Atom,
-    size: usize,
-    atoms: &mut HashMap<usize, Atom>,
+    size: u32,
+    atoms: &mut HashMap<u32, Atom>,
     follower: &mut F,
     pool: &mut JoinPool,
 ) -> Result<(), Error> {
@@ -100,6 +100,24 @@ fn walk_root<F: Follower>(
     }
 
     Ok(())
+}
+
+fn id(id: usize) -> Option<u32> {
+    match u32::try_from(id) {
+        Ok(id) => Some(id),
+        Err(_) => None,
+    }
+}
+
+fn map_atoms(atoms: Vec<Atom>) -> Result<HashMap<u32, Atom>, Error> {
+    atoms
+        .into_iter()
+        .enumerate()
+        .map(|(i, a)| match id(i) {
+            Some(id) => Ok((id, a)),
+            None => Err(Error::TooManyAtoms),
+        })
+        .collect()
 }
 
 #[cfg(test)]

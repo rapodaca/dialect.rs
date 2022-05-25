@@ -23,7 +23,7 @@ impl Follower for Writer {
     fn root(&mut self, root: &AtomKind) {
         let top = match self.stack.last_mut() {
             Some(string) => string,
-            None => &mut self.base
+            None => &mut self.base,
         };
 
         if !top.is_empty() {
@@ -36,7 +36,7 @@ impl Follower for Writer {
     fn extend(&mut self, bond_kind: &BondKind, atom_kind: &AtomKind) {
         let top = match self.stack.last_mut() {
             Some(string) => string,
-            None => &mut self.base
+            None => &mut self.base,
         };
 
         top.push_str(&bond_kind.to_string());
@@ -46,7 +46,7 @@ impl Follower for Writer {
     fn join(&mut self, bond_kind: &BondKind, cut: &Cut) {
         let top = match self.stack.last_mut() {
             Some(string) => string,
-            None => &mut self.base
+            None => &mut self.base,
         };
 
         top.push_str(&bond_kind.to_string());
@@ -61,12 +61,11 @@ impl Follower for Writer {
         let top = self.stack.pop().expect("top");
         let last = match self.stack.last_mut() {
             Some(string) => string,
-            None => &mut self.base
+            None => &mut self.base,
         };
 
         last.push_str(&top);
         last.push(')');
-
     }
 }
 
