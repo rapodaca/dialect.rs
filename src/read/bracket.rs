@@ -1,6 +1,6 @@
 use lyn::{Action, Scanner};
 
-use super::{digit, element, missing_character, non_zero, Error};
+use super::{digit, element, missing_character, nonzero, Error};
 use crate::feature::{
     Bracket, Charge, Isotope, Selection, Stereodescriptor, Symbol,
     VirtualHydrogen,

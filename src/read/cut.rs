@@ -2,11 +2,11 @@ use lyn::Scanner;
 
 use crate::feature::Cut;
 
-use super::{digit, missing_character, non_zero, Error};
+use super::{digit, missing_character, nonzero, Error};
 
 pub fn cut(scanner: &mut Scanner) -> Result<Option<Cut>, Error> {
     if scanner.take(&'%') {
-        if let Some(first) = non_zero(scanner) {
+        if let Some(first) = nonzero(scanner) {
             if let Some(second) = digit(scanner) {
                 Ok(Some(Cut::new(first * 10 + second).expect("cut index")))
             } else {
@@ -15,7 +15,7 @@ pub fn cut(scanner: &mut Scanner) -> Result<Option<Cut>, Error> {
         } else {
             Err(missing_character(scanner))
         }
-    } else if let Some(digit) = non_zero(scanner) {
+    } else if let Some(digit) = nonzero(scanner) {
         Ok(Some(Cut::new(digit).expect("cut index")))
     } else {
         Ok(None)

@@ -1,6 +1,6 @@
 use lyn::Scanner;
 
-pub fn non_zero(scanner: &mut Scanner) -> Option<u8> {
+pub fn nonzero(scanner: &mut Scanner) -> Option<u8> {
     scanner.transform(|character| match character {
         '1' => Some(1),
         '2' => Some(2),
