@@ -1,6 +1,6 @@
 use lyn::{Action, Error, Scanner};
 
-use crate::graph::Element;
+use crate::feature::Element;
 
 pub fn element(scanner: &mut Scanner) -> Result<Option<Element>, Error> {
     Ok(scanner.scan(|symbol| match symbol {

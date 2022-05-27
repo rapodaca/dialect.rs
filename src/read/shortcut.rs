@@ -1,6 +1,6 @@
 use lyn::{Action, Scanner};
 
-use crate::graph::Shortcut;
+use crate::feature::Shortcut;
 
 pub fn shortcut(scanner: &mut Scanner) -> Result<Option<Shortcut>, lyn::Error> {
     scanner.scan(|symbol| match symbol {

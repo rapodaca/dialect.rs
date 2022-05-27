@@ -1,6 +1,6 @@
 use std::{convert, fmt};
 
-use super::Error;
+use crate::tree::Error;
 
 #[derive(Debug, PartialEq, Clone)]
 pub struct Extension(u16);

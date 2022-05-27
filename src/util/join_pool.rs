@@ -4,7 +4,7 @@ use std::collections::{BinaryHeap, HashMap};
 use std::convert::TryInto;
 use std::hash::{Hash, Hasher};
 
-use crate::graph::Cut;
+use crate::feature::Cut;
 
 #[derive(Eq, PartialEq, PartialOrd)]
 struct Index(u8);

@@ -41,7 +41,7 @@ fn option_to_string<T: fmt::Display>(option: &Option<T>) -> String {
 
 #[cfg(test)]
 mod to_string {
-    use crate::graph::Element;
+    use crate::feature::Element;
     use pretty_assertions::assert_eq;
 
     use super::*;

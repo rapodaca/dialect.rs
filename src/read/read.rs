@@ -3,7 +3,7 @@ use lyn::Scanner;
 use super::{
     bond, bracket, cut, missing_character, selection, shortcut, Error,
 };
-use crate::graph::{AtomKind, BondKind, Follower};
+use crate::{feature::{AtomKind, BondKind}, follow::Follower};
 
 pub fn read(string: &str, follower: &mut impl Follower) -> Result<(), Error> {
     let mut scanner = Scanner::new(string);
@@ -139,7 +139,7 @@ fn atom(scanner: &mut Scanner) -> Result<Option<AtomKind>, Error> {
 
 #[cfg(test)]
 mod tests {
-    use crate::write::Writer;
+    use crate::follow::Writer;
 
     use super::*;
 

@@ -1,7 +1,7 @@
 use core::fmt;
 use std::convert;
 
-use super::Error;
+use crate::tree::Error;
 
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub enum Charge {

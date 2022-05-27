@@ -49,7 +49,7 @@ impl AtomKind {
 
 #[cfg(test)]
 mod tests {
-    use crate::graph::{Symbol, VirtualHydrogen};
+    use crate::feature::{Symbol, VirtualHydrogen};
 
     use super::*;
     use pretty_assertions::assert_eq;

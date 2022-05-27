@@ -1,6 +1,6 @@
 use lyn::Scanner;
 
-use crate::graph::Cut;
+use crate::feature::Cut;
 
 use super::{digit, missing_character, Error};
 

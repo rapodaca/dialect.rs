@@ -1,6 +1,6 @@
 use lyn::Scanner;
 
-use crate::graph::BondKind;
+use crate::feature::BondKind;
 
 pub fn bond(scanner: &mut Scanner) -> Option<BondKind> {
     scanner.transform(|target| match target {

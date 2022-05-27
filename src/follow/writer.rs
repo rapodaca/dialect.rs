@@ -1,4 +1,4 @@
-use crate::graph::{AtomKind, BondKind, Cut, Follower};
+use crate::{feature::{AtomKind, BondKind, Cut}, follow::Follower};
 
 #[derive(Debug, PartialEq)]
 pub struct Writer {
@@ -71,7 +71,7 @@ impl Follower for Writer {
 
 #[cfg(test)]
 mod write {
-    use crate::graph::Shortcut;
+    use crate::feature::Shortcut;
     use pretty_assertions::assert_eq;
 
     use super::*;

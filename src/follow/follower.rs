@@ -1,4 +1,4 @@
-use crate::graph::{AtomKind, BondKind, Cut};
+use crate::feature::{AtomKind, BondKind, Cut};
 
 pub trait Follower {
     fn root(&mut self, root: &AtomKind);

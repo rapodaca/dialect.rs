@@ -1,7 +1,7 @@
 use lyn::{Action, Scanner};
 
 use super::{element, missing_character, non_zero, uint16, Error};
-use crate::graph::{
+use crate::feature::{
     Bracket, Charge, Extension, Isotope, Selection, Stereodescriptor, Symbol,
     VirtualHydrogen,
 };
@@ -118,7 +118,7 @@ fn extension(scanner: &mut Scanner) -> Result<Option<Extension>, Error> {
 
 #[cfg(test)]
 mod tests {
-    use crate::graph::Element;
+    use crate::feature::Element;
 
     use super::*;
 

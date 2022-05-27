@@ -1,6 +1,6 @@
 use lyn::Scanner;
 
-use crate::graph::Selection;
+use crate::feature::Selection;
 
 pub fn selection(scanner: &mut Scanner) -> Option<Selection> {
     scanner.transform(|character| match character {

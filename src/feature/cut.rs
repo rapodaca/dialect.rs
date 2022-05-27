@@ -1,8 +1,8 @@
 use std::fmt;
 
-use super::Error;
+use crate::tree::Error;
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub enum Cut {
     C0,
     C1,
