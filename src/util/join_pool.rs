@@ -63,12 +63,12 @@ impl JoinPool {
 
                 self.replaced.push(Index(result));
 
-                result.try_into().expect("rnum")
+                Cut::new(result).expect("rnum")
             }
             Entry::Vacant(vacant) => {
                 vacant.insert(next);
 
-                next.try_into().expect("rnum")
+                Cut::new(next).expect("rnum")
             }
         }
     }

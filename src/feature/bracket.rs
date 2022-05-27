@@ -45,7 +45,7 @@ mod to_string {
     fn kitchen_sink() {
         let bracket = Bracket {
             symbol: Symbol::Element(Element::C),
-            isotope: Some(Isotope::try_from(13).unwrap()),
+            isotope: Some(Isotope::new(13).unwrap()),
             stereodescriptor: Some(Stereodescriptor::Left),
             virtual_hydrogen: Some(VirtualHydrogen::H),
             charge: Some(Charge::Plus),

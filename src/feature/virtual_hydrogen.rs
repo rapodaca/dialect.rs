@@ -1,6 +1,4 @@
-use std::{convert, default, fmt};
-
-use crate::tree::Error;
+use std::{default, fmt};
 
 #[derive(Debug, PartialEq, Clone)]
 pub enum VirtualHydrogen {
@@ -16,21 +14,19 @@ pub enum VirtualHydrogen {
     H9,
 }
 
-impl convert::TryFrom<u8> for VirtualHydrogen {
-    type Error = Error;
-
-    fn try_from(value: u8) -> Result<Self, Self::Error> {
+impl VirtualHydrogen {
+    pub fn new(value: u8) -> Option<Self> {
         match value {
-            1 => Ok(Self::H1),
-            2 => Ok(Self::H2),
-            3 => Ok(Self::H3),
-            4 => Ok(Self::H4),
-            5 => Ok(Self::H5),
-            6 => Ok(Self::H6),
-            7 => Ok(Self::H7),
-            8 => Ok(Self::H8),
-            9 => Ok(Self::H9),
-            _ => Err(Error::Range),
+            1 => Some(Self::H1),
+            2 => Some(Self::H2),
+            3 => Some(Self::H3),
+            4 => Some(Self::H4),
+            5 => Some(Self::H5),
+            6 => Some(Self::H6),
+            7 => Some(Self::H7),
+            8 => Some(Self::H8),
+            9 => Some(Self::H9),
+            _ => None,
         }
     }
 }

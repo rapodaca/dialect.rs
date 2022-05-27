@@ -1,7 +1,4 @@
 use core::fmt;
-use std::convert;
-
-use crate::tree::Error;
 
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub enum Charge {
@@ -27,30 +24,28 @@ pub enum Charge {
     Plus9,
 }
 
-impl convert::TryFrom<i8> for Charge {
-    type Error = Error;
-
-    fn try_from(value: i8) -> Result<Self, Self::Error> {
+impl Charge {
+    pub fn new(value: i8) -> Option<Charge> {
         match value {
-            -9 => Ok(Charge::Minus9),
-            -8 => Ok(Charge::Minus8),
-            -7 => Ok(Charge::Minus7),
-            -6 => Ok(Charge::Minus6),
-            -5 => Ok(Charge::Minus5),
-            -4 => Ok(Charge::Minus4),
-            -3 => Ok(Charge::Minus3),
-            -2 => Ok(Charge::Minus2),
-            -1 => Ok(Charge::Minus1),
-            1 => Ok(Charge::Plus1),
-            2 => Ok(Charge::Plus2),
-            3 => Ok(Charge::Plus3),
-            4 => Ok(Charge::Plus4),
-            5 => Ok(Charge::Plus5),
-            6 => Ok(Charge::Plus6),
-            7 => Ok(Charge::Plus7),
-            8 => Ok(Charge::Plus8),
-            9 => Ok(Charge::Plus9),
-            _ => Err(Error::Range),
+            -9 => Some(Charge::Minus9),
+            -8 => Some(Charge::Minus8),
+            -7 => Some(Charge::Minus7),
+            -6 => Some(Charge::Minus6),
+            -5 => Some(Charge::Minus5),
+            -4 => Some(Charge::Minus4),
+            -3 => Some(Charge::Minus3),
+            -2 => Some(Charge::Minus2),
+            -1 => Some(Charge::Minus1),
+            1 => Some(Charge::Plus1),
+            2 => Some(Charge::Plus2),
+            3 => Some(Charge::Plus3),
+            4 => Some(Charge::Plus4),
+            5 => Some(Charge::Plus5),
+            6 => Some(Charge::Plus6),
+            7 => Some(Charge::Plus7),
+            8 => Some(Charge::Plus8),
+            9 => Some(Charge::Plus9),
+            _ => None,
         }
     }
 }

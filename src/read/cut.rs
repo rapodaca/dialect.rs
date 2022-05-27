@@ -10,7 +10,7 @@ pub fn cut(scanner: &mut Scanner) -> Result<Option<Cut>, Error> {
             if let Some(second) = digit(scanner) {
                 let index = first * 10 + second;
 
-                Ok(Some(Cut::try_from(index).expect("cut index")))
+                Ok(Some(Cut::new(index).expect("cut index")))
             } else {
                 Err(missing_character(scanner))
             }
@@ -18,7 +18,7 @@ pub fn cut(scanner: &mut Scanner) -> Result<Option<Cut>, Error> {
             Err(missing_character(scanner))
         }
     } else if let Some(digit) = digit(scanner) {
-        Ok(Some(Cut::try_from(digit).expect("cut index")))
+        Ok(Some(Cut::new(digit).expect("cut index")))
     } else {
         Ok(None)
     }

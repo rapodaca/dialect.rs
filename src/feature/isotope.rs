@@ -1,24 +1,20 @@
-use std::{convert, fmt};
-
-use crate::tree::Error;
+use std;
 
 #[derive(Debug, PartialEq, Clone)]
 pub struct Isotope(u16);
 
-impl convert::TryFrom<u16> for Isotope {
-    type Error = Error;
-
-    fn try_from(value: u16) -> Result<Self, Self::Error> {
+impl Isotope {
+    pub fn new(value: u16) -> Option<Self> {
         if value < 1000 {
-            Ok(Isotope(value))
+            Some(Isotope(value))
         } else {
-            Err(Error::Range)
+            None
         }
     }
 }
 
-impl fmt::Display for Isotope {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+impl std::fmt::Display for Isotope {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         self.0.fmt(f)
     }
 }

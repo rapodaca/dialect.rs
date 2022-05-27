@@ -31,7 +31,7 @@ pub fn bracket(scanner: &mut Scanner) -> Result<Option<Bracket>, Error> {
 
 fn isotope(scanner: &mut Scanner) -> Option<Isotope> {
     match uint16(scanner, 3) {
-        Some(number) => Some(number.try_into().expect("isotope")),
+        Some(number) => Some(Isotope::new(number).expect("isotope")),
         None => None,
     }
 }
@@ -75,7 +75,7 @@ fn virtual_hydrogen(scanner: &mut Scanner) -> Option<VirtualHydrogen> {
     if scanner.take(&'H') {
         match non_zero(scanner) {
             Some(digit) => {
-                Some(VirtualHydrogen::try_from(digit).expect("digit"))
+                Some(VirtualHydrogen::new(digit).expect("digit"))
             }
             _ => Some(VirtualHydrogen::default()),
         }
@@ -87,13 +87,15 @@ fn virtual_hydrogen(scanner: &mut Scanner) -> Option<VirtualHydrogen> {
 fn charge(scanner: &mut Scanner) -> Option<Charge> {
     if scanner.take(&'+') {
         match non_zero(scanner) {
-            Some(digit) => Some(Charge::try_from(digit as i8).expect("charge")),
+            Some(digit) => {
+                Some(Charge::new(digit as i8).expect("charge"))
+            },
             None => Some(Charge::Plus),
         }
     } else if scanner.take(&'-') {
         match non_zero(scanner) {
             Some(digit) => {
-                Some(Charge::try_from(digit as i8 * -1).expect("charge"))
+                Some(Charge::new(digit as i8 * -1).expect("charge"))
             }
             None => Some(Charge::Minus),
         }
@@ -198,7 +200,7 @@ mod tests {
             bracket(&mut scanner),
             Ok(Some(Bracket {
                 symbol: Symbol::Element(Element::H),
-                isotope: Some(Isotope::try_from(1).unwrap()),
+                isotope: Some(Isotope::new(1).unwrap()),
                 ..Default::default()
             }))
         )
@@ -254,7 +256,7 @@ mod tests {
             bracket(&mut scanner),
             Ok(Some(Bracket {
                 symbol: Symbol::Element(Element::C),
-                isotope: Some(Isotope::try_from(12).unwrap()),
+                isotope: Some(Isotope::new(12).unwrap()),
                 stereodescriptor: Some(Stereodescriptor::Left),
                 virtual_hydrogen: Some(VirtualHydrogen::H1),
                 charge: Some(Charge::Plus2),

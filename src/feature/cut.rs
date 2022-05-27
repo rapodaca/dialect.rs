@@ -1,7 +1,5 @@
 use std::fmt;
 
-use crate::tree::Error;
-
 #[derive(Debug, PartialEq, Clone)]
 pub enum Cut {
     C0,
@@ -106,11 +104,9 @@ pub enum Cut {
     C99,
 }
 
-impl TryFrom<u8> for Cut {
-    type Error = Error;
-
-    fn try_from(value: u8) -> Result<Self, Self::Error> {
-        Ok(match value {
+impl Cut {
+    pub fn new(value: u8) -> Option<Self> {
+        Some(match value {
             0 => Self::C0,
             1 => Self::C1,
             2 => Self::C2,
@@ -211,7 +207,7 @@ impl TryFrom<u8> for Cut {
             97 => Self::C97,
             98 => Self::C98,
             99 => Self::C99,
-            _ => return Err(Error::Range),
+            _ => return None,
         })
     }
 }
