@@ -1,6 +1,6 @@
 use lyn::{Action, Scanner};
 
-use super::{element, missing_character, non_zero, uint16, Error, digit};
+use super::{digit, element, missing_character, non_zero, Error};
 use crate::feature::{
     Bracket, Charge, Isotope, Selection, Stereodescriptor, Symbol,
     VirtualHydrogen,
@@ -32,9 +32,9 @@ pub fn bracket(scanner: &mut Scanner) -> Result<Option<Bracket>, Error> {
 fn isotope(scanner: &mut Scanner) -> Option<Isotope> {
     let mut sum = match non_zero(scanner) {
         Some(digit) => digit as u16,
-        None => return None
+        None => return None,
     };
-    
+
     for _ in 0..2 {
         sum = match digit(scanner) {
             Some(digit) => sum * 10 + digit as u16,
@@ -83,9 +83,7 @@ fn stereodescriptor(scanner: &mut Scanner) -> Option<Stereodescriptor> {
 fn virtual_hydrogen(scanner: &mut Scanner) -> Option<VirtualHydrogen> {
     if scanner.take(&'H') {
         match non_zero(scanner) {
-            Some(digit) => {
-                Some(VirtualHydrogen::new(digit).expect("digit"))
-            }
+            Some(digit) => Some(VirtualHydrogen::new(digit).expect("digit")),
             _ => Some(VirtualHydrogen::default()),
         }
     } else {
@@ -96,16 +94,12 @@ fn virtual_hydrogen(scanner: &mut Scanner) -> Option<VirtualHydrogen> {
 fn charge(scanner: &mut Scanner) -> Option<Charge> {
     if scanner.take(&'+') {
         match non_zero(scanner) {
-            Some(digit) => {
-                Some(Charge::new(digit as i8).expect("charge"))
-            },
+            Some(digit) => Some(Charge::new(digit as i8).expect("charge")),
             None => Some(Charge::Plus),
         }
     } else if scanner.take(&'-') {
         match non_zero(scanner) {
-            Some(digit) => {
-                Some(Charge::new(digit as i8 * -1).expect("charge"))
-            }
+            Some(digit) => Some(Charge::new(digit as i8 * -1).expect("charge")),
             None => Some(Charge::Minus),
         }
     } else {
@@ -115,8 +109,8 @@ fn charge(scanner: &mut Scanner) -> Option<Charge> {
 
 #[cfg(test)]
 mod isotope {
-    use pretty_assertions::assert_eq;
     use super::*;
+    use pretty_assertions::assert_eq;
 
     #[test]
     fn leading_zero() {
@@ -149,8 +143,8 @@ mod isotope {
 
 #[cfg(test)]
 mod tests {
-    use pretty_assertions::assert_eq;
     use crate::feature::Element;
+    use pretty_assertions::assert_eq;
 
     use super::*;
 
@@ -170,7 +164,7 @@ mod tests {
 
     #[test]
     fn open_invalid() {
-        let mut scanner = Scanner::new("[?");
+        let mut scanner = Scanner::new("[0");
 
         assert_eq!(bracket(&mut scanner), Err(Error::Character(1)))
     }

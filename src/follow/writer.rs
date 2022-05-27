@@ -1,4 +1,7 @@
-use crate::{feature::{AtomKind, BondKind, Cut}, follow::Follower};
+use crate::{
+    feature::{AtomKind, BondKind, Cut},
+    follow::Follower,
+};
 
 #[derive(Debug, PartialEq)]
 pub struct Writer {

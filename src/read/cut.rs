@@ -2,22 +2,20 @@ use lyn::Scanner;
 
 use crate::feature::Cut;
 
-use super::{digit, missing_character, Error};
+use super::{digit, missing_character, non_zero, Error};
 
 pub fn cut(scanner: &mut Scanner) -> Result<Option<Cut>, Error> {
     if scanner.take(&'%') {
-        if let Some(first) = digit(scanner) {
+        if let Some(first) = non_zero(scanner) {
             if let Some(second) = digit(scanner) {
-                let index = first * 10 + second;
-
-                Ok(Some(Cut::new(index).expect("cut index")))
+                Ok(Some(Cut::new(first * 10 + second).expect("cut index")))
             } else {
                 Err(missing_character(scanner))
             }
         } else {
             Err(missing_character(scanner))
         }
-    } else if let Some(digit) = digit(scanner) {
+    } else if let Some(digit) = non_zero(scanner) {
         Ok(Some(Cut::new(digit).expect("cut index")))
     } else {
         Ok(None)
@@ -43,6 +41,13 @@ mod tests {
     }
 
     #[test]
+    fn percent_zero() {
+        let mut scanner = Scanner::new("%0");
+
+        assert_eq!(cut(&mut scanner), Err(Error::Character(1)))
+    }
+
+    #[test]
     fn none() {
         let mut scanner = Scanner::new("x");
 
@@ -54,6 +59,13 @@ mod tests {
         let mut scanner = Scanner::new("%42");
 
         assert_eq!(cut(&mut scanner), Ok(Some(Cut::C42)))
+    }
+
+    #[test]
+    fn digit_zero() {
+        let mut scanner = Scanner::new("0");
+
+        assert_eq!(cut(&mut scanner), Ok(None))
     }
 
     #[test]

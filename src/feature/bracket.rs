@@ -1,8 +1,6 @@
 use std::fmt;
 
-use super::{
-    Charge, Isotope, Stereodescriptor, Symbol, VirtualHydrogen,
-};
+use super::{Charge, Isotope, Stereodescriptor, Symbol, VirtualHydrogen};
 
 #[derive(Debug, PartialEq, Clone, Default)]
 pub struct Bracket {

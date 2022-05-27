@@ -2,7 +2,6 @@ use std::fmt;
 
 #[derive(Debug, PartialEq, Clone)]
 pub enum Cut {
-    C0,
     C1,
     C2,
     C3,
@@ -107,7 +106,6 @@ pub enum Cut {
 impl Cut {
     pub fn new(value: u8) -> Option<Self> {
         Some(match value {
-            0 => Self::C0,
             1 => Self::C1,
             2 => Self::C2,
             3 => Self::C3,
@@ -218,7 +216,6 @@ impl fmt::Display for Cut {
             f,
             "{}",
             match self {
-                Self::C0 => "0",
                 Self::C1 => "1",
                 Self::C2 => "2",
                 Self::C3 => "3",
