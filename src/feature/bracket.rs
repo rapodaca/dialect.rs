@@ -1,7 +1,7 @@
 use std::fmt;
 
 use super::{
-    Charge, Extension, Isotope, Stereodescriptor, Symbol, VirtualHydrogen,
+    Charge, Isotope, Stereodescriptor, Symbol, VirtualHydrogen,
 };
 
 #[derive(Debug, PartialEq, Clone, Default)]
@@ -11,23 +11,18 @@ pub struct Bracket {
     pub stereodescriptor: Option<Stereodescriptor>,
     pub virtual_hydrogen: Option<VirtualHydrogen>,
     pub charge: Option<Charge>,
-    pub extension: Option<Extension>,
 }
 
 impl fmt::Display for Bracket {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(
             f,
-            "[{}{}{}{}{}{}]",
+            "[{}{}{}{}{}]",
             option_to_string(&self.isotope),
             self.symbol.to_string(),
             option_to_string(&self.stereodescriptor),
             option_to_string(&self.virtual_hydrogen),
             option_to_string(&self.charge),
-            match &self.extension {
-                Some(extension) => format!(":{}", extension),
-                None => "".to_string(),
-            }
         )
     }
 }
@@ -54,9 +49,8 @@ mod to_string {
             stereodescriptor: Some(Stereodescriptor::Left),
             virtual_hydrogen: Some(VirtualHydrogen::H),
             charge: Some(Charge::Plus),
-            extension: Some(Extension::try_from(10).unwrap()),
         };
 
-        assert_eq!(bracket.to_string(), "[13C@H+:10]")
+        assert_eq!(bracket.to_string(), "[13C@H+]")
     }
 }

@@ -71,7 +71,6 @@ mod tests {
             stereodescriptor: Some(Stereodescriptor::Left),
             virtual_hydrogen: None,
             charge: None,
-            extension: None,
         });
 
         kind.invert_configuration();
@@ -84,7 +83,6 @@ mod tests {
                 stereodescriptor: Some(Stereodescriptor::Left),
                 virtual_hydrogen: None,
                 charge: None,
-                extension: None,
             })
         )
     }
@@ -97,7 +95,6 @@ mod tests {
             stereodescriptor: Some(Stereodescriptor::Left),
             virtual_hydrogen: Some(VirtualHydrogen::H1),
             charge: None,
-            extension: None,
         });
 
         kind.invert_configuration();
@@ -110,7 +107,6 @@ mod tests {
                 stereodescriptor: Some(Stereodescriptor::Right),
                 virtual_hydrogen: Some(VirtualHydrogen::H1),
                 charge: None,
-                extension: None,
             })
         )
     }
