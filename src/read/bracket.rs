@@ -30,7 +30,7 @@ pub fn bracket(scanner: &mut Scanner) -> Result<Option<Bracket>, Error> {
 }
 
 fn isotope(scanner: &mut Scanner) -> Option<Isotope> {
-    let mut sum = match non_zero(scanner) {
+    let mut sum = match nonzero(scanner) {
         Some(digit) => digit as u16,
         None => return None,
     };
@@ -82,7 +82,7 @@ fn stereodescriptor(scanner: &mut Scanner) -> Option<Stereodescriptor> {
 
 fn virtual_hydrogen(scanner: &mut Scanner) -> Option<VirtualHydrogen> {
     if scanner.take(&'H') {
-        match non_zero(scanner) {
+        match nonzero(scanner) {
             Some(digit) => Some(VirtualHydrogen::new(digit).expect("digit")),
             _ => Some(VirtualHydrogen::default()),
         }
@@ -93,12 +93,12 @@ fn virtual_hydrogen(scanner: &mut Scanner) -> Option<VirtualHydrogen> {
 
 fn charge(scanner: &mut Scanner) -> Option<Charge> {
     if scanner.take(&'+') {
-        match non_zero(scanner) {
+        match nonzero(scanner) {
             Some(digit) => Some(Charge::new(digit as i8).expect("charge")),
             None => Some(Charge::Plus),
         }
     } else if scanner.take(&'-') {
-        match non_zero(scanner) {
+        match nonzero(scanner) {
             Some(digit) => Some(Charge::new(digit as i8 * -1).expect("charge")),
             None => Some(Charge::Minus),
         }
