@@ -1,7 +1,6 @@
 use std::cmp::{Ord, Ordering};
 use std::collections::hash_map::Entry;
 use std::collections::{BinaryHeap, HashMap};
-use std::convert::TryInto;
 use std::hash::{Hash, Hasher};
 
 use crate::feature::Cut;

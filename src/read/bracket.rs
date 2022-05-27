@@ -1,6 +1,6 @@
 use lyn::{Action, Scanner};
 
-use super::{element, missing_character, non_zero, uint16, Error};
+use super::{element, missing_character, non_zero, uint16, Error, digit};
 use crate::feature::{
     Bracket, Charge, Isotope, Selection, Stereodescriptor, Symbol,
     VirtualHydrogen,
@@ -30,10 +30,19 @@ pub fn bracket(scanner: &mut Scanner) -> Result<Option<Bracket>, Error> {
 }
 
 fn isotope(scanner: &mut Scanner) -> Option<Isotope> {
-    match uint16(scanner, 3) {
-        Some(number) => Some(Isotope::new(number).expect("isotope")),
-        None => None,
+    let mut sum = match non_zero(scanner) {
+        Some(digit) => digit as u16,
+        None => return None
+    };
+    
+    for _ in 0..2 {
+        sum = match digit(scanner) {
+            Some(digit) => sum * 10 + digit as u16,
+            None => return Some(Isotope::new(sum).expect("isotope")),
+        };
     }
+
+    Some(Isotope::new(sum).expect("isotope"))
 }
 
 fn symbol(scanner: &mut Scanner) -> Result<Option<Symbol>, Error> {
@@ -105,7 +114,42 @@ fn charge(scanner: &mut Scanner) -> Option<Charge> {
 }
 
 #[cfg(test)]
+mod isotope {
+    use pretty_assertions::assert_eq;
+    use super::*;
+
+    #[test]
+    fn leading_zero() {
+        let mut scanner = Scanner::new("007");
+
+        assert_eq!(isotope(&mut scanner), None)
+    }
+
+    #[test]
+    fn single_digit() {
+        let mut scanner = Scanner::new("7");
+
+        assert_eq!(isotope(&mut scanner), Some(Isotope::new(7).unwrap()))
+    }
+
+    #[test]
+    fn double_digit() {
+        let mut scanner = Scanner::new("42");
+
+        assert_eq!(isotope(&mut scanner), Some(Isotope::new(42).unwrap()))
+    }
+
+    #[test]
+    fn triple_digit() {
+        let mut scanner = Scanner::new("999");
+
+        assert_eq!(isotope(&mut scanner), Some(Isotope::new(999).unwrap()))
+    }
+}
+
+#[cfg(test)]
 mod tests {
+    use pretty_assertions::assert_eq;
     use crate::feature::Element;
 
     use super::*;
@@ -143,6 +187,13 @@ mod tests {
         let mut scanner = Scanner::new("[1");
 
         assert_eq!(bracket(&mut scanner), Err(Error::EndOfLine))
+    }
+
+    #[test]
+    fn isotope_zero() {
+        let mut scanner = Scanner::new("[0C]");
+
+        assert_eq!(bracket(&mut scanner), Err(Error::Character(1)))
     }
 
     #[test]
