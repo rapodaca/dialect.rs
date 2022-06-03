@@ -1,6 +1,6 @@
 mod bond;
 mod bracket;
-mod cut;
+mod bridge;
 mod digit;
 mod element;
 mod error;
@@ -13,7 +13,7 @@ mod uint16;
 
 pub use bond::bond;
 pub use bracket::bracket;
-pub use cut::cut;
+pub use bridge::bridge;
 pub use digit::digit;
 pub use element::element;
 pub use error::Error;

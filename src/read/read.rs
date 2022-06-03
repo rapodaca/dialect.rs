@@ -1,7 +1,7 @@
 use lyn::Scanner;
 
 use super::{
-    bond, bracket, cut, missing_character, selection, shortcut, Error,
+    bond, bracket, bridge, missing_character, selection, shortcut, Error,
 };
 use crate::{
     feature::{AtomKind, BondKind},
@@ -68,8 +68,8 @@ fn cut_or_sequence<F: Follower>(
     scanner: &mut Scanner,
     reporter: &mut F,
 ) -> Result<bool, Error> {
-    if let Some(cut) = cut(scanner)? {
-        reporter.join(bond_kind, &cut);
+    if let Some(bridge) = bridge(scanner)? {
+        reporter.bridge(bond_kind, &bridge);
 
         Ok(true)
     } else {

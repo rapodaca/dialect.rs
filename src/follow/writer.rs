@@ -1,6 +1,7 @@
 use crate::{
-    feature::{AtomKind, BondKind, Cut},
+    feature::{AtomKind, BondKind},
     follow::Follower,
+    tree::Bridge,
 };
 
 #[derive(Debug, PartialEq)]
@@ -46,7 +47,7 @@ impl Follower for Writer {
         top.push_str(&atom_kind.to_string());
     }
 
-    fn join(&mut self, bond_kind: &BondKind, cut: &Cut) {
+    fn bridge(&mut self, bond_kind: &BondKind, cut: &Bridge) {
         let top = match self.stack.last_mut() {
             Some(string) => string,
             None => &mut self.base,
@@ -137,10 +138,10 @@ mod write {
         let mut writer = Writer::new();
 
         writer.root(&AtomKind::Star);
-        writer.join(&BondKind::Single, &Cut::C1);
+        writer.bridge(&BondKind::Single, &Bridge::B1);
         writer.extend(&BondKind::Single, &AtomKind::Star);
         writer.extend(&BondKind::Double, &AtomKind::Star);
-        writer.join(&BondKind::Single, &Cut::C1);
+        writer.bridge(&BondKind::Single, &Bridge::B1);
 
         assert_eq!(writer.write(), "*-1-*=*-1")
     }
@@ -153,9 +154,9 @@ mod write {
         writer.push();
         writer.extend(&BondKind::Elided, &AtomKind::Star);
         writer.extend(&BondKind::Elided, &AtomKind::Star);
-        writer.join(&BondKind::Elided, &Cut::C1);
+        writer.bridge(&BondKind::Elided, &Bridge::B1);
         writer.pop();
-        writer.join(&BondKind::Elided, &Cut::C1);
+        writer.bridge(&BondKind::Elided, &Bridge::B1);
 
         assert_eq!(writer.write(), "*(**1)1")
     }

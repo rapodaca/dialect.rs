@@ -1,22 +1,18 @@
 use crate::feature::AtomKind;
 
-use super::Child;
+use super::Edge;
 
 #[derive(Debug, PartialEq, Default, Clone)]
 pub struct Atom {
     pub kind: AtomKind,
-    pub children: Vec<Child>,
+    pub edges: Vec<Edge>,
 }
 
 impl Atom {
-    pub fn star(children: Vec<Child>) -> Self {
+    pub fn star(edges: Vec<Edge>) -> Self {
         Self {
             kind: AtomKind::Star,
-            children,
+            edges,
         }
-    }
-
-    pub fn degree(&self) -> usize {
-        self.children.len()
     }
 }

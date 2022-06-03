@@ -3,7 +3,7 @@ use std::collections::hash_map::Entry;
 use std::collections::{BinaryHeap, HashMap};
 use std::hash::{Hash, Hasher};
 
-use crate::feature::Cut;
+use crate::tree::Bridge;
 
 #[derive(Eq, PartialEq, PartialOrd)]
 struct Index(u8);
@@ -30,13 +30,13 @@ impl Hash for Pair {
     }
 }
 
-pub struct JoinPool {
+pub struct BridgePool {
     counter: u8,
     borrowed: HashMap<Pair, u8>,
     replaced: BinaryHeap<Index>,
 }
 
-impl JoinPool {
+impl BridgePool {
     pub fn new() -> Self {
         Self {
             counter: 1,
@@ -45,7 +45,7 @@ impl JoinPool {
         }
     }
 
-    pub fn hit(&mut self, sid: u32, tid: u32) -> Cut {
+    pub fn hit(&mut self, sid: u32, tid: u32) -> Bridge {
         let next = match self.replaced.pop() {
             Some(next) => next.0,
             None => {
@@ -62,12 +62,12 @@ impl JoinPool {
 
                 self.replaced.push(Index(result));
 
-                Cut::new(result).expect("rnum")
+                Bridge::new(result).expect("rnum")
             }
             Entry::Vacant(vacant) => {
                 vacant.insert(next);
 
-                Cut::new(next).expect("rnum")
+                Bridge::new(next).expect("rnum")
             }
         }
     }
@@ -94,39 +94,39 @@ mod hit {
 
     #[test]
     fn unknown() {
-        let mut pool = JoinPool::new();
+        let mut pool = BridgePool::new();
 
-        assert_eq!(pool.hit(1, 2), Cut::C1);
-        assert_eq!(pool.hit(1, 5), Cut::C2);
-        assert_eq!(pool.hit(13, 42), Cut::C3)
+        assert_eq!(pool.hit(1, 2), Bridge::B1);
+        assert_eq!(pool.hit(1, 5), Bridge::B2);
+        assert_eq!(pool.hit(13, 42), Bridge::B3)
     }
 
     #[test]
     fn known() {
-        let mut pool = JoinPool::new();
+        let mut pool = BridgePool::new();
 
-        assert_eq!(pool.hit(0, 1), Cut::C1);
-        assert_eq!(pool.hit(1, 0), Cut::C1)
+        assert_eq!(pool.hit(0, 1), Bridge::B1);
+        assert_eq!(pool.hit(1, 0), Bridge::B1)
     }
 
     #[test]
     fn unknown_with_one_returned() {
-        let mut pool = JoinPool::new();
+        let mut pool = BridgePool::new();
 
-        assert_eq!(pool.hit(0, 1), Cut::C1);
-        assert_eq!(pool.hit(1, 0), Cut::C1);
-        assert_eq!(pool.hit(13, 42), Cut::C1)
+        assert_eq!(pool.hit(0, 1), Bridge::B1);
+        assert_eq!(pool.hit(1, 0), Bridge::B1);
+        assert_eq!(pool.hit(13, 42), Bridge::B1)
     }
 
     #[test]
     fn unknown_with_two_returned() {
-        let mut pool = JoinPool::new();
+        let mut pool = BridgePool::new();
 
-        assert_eq!(pool.hit(0, 1), Cut::C1);
-        assert_eq!(pool.hit(1, 3), Cut::C2);
-        assert_eq!(pool.hit(2, 4), Cut::C3);
-        assert_eq!(pool.hit(3, 1), Cut::C2);
-        assert_eq!(pool.hit(1, 0), Cut::C1);
-        assert_eq!(pool.hit(3, 5), Cut::C1)
+        assert_eq!(pool.hit(0, 1), Bridge::B1);
+        assert_eq!(pool.hit(1, 3), Bridge::B2);
+        assert_eq!(pool.hit(2, 4), Bridge::B3);
+        assert_eq!(pool.hit(3, 1), Bridge::B2);
+        assert_eq!(pool.hit(1, 0), Bridge::B1);
+        assert_eq!(pool.hit(3, 5), Bridge::B1)
     }
 }

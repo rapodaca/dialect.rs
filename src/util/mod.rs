@@ -1,3 +1,3 @@
-mod join_pool;
+mod bridge_pool;
 
-pub use join_pool::JoinPool;
+pub use bridge_pool::BridgePool;

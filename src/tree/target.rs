@@ -1,9 +1,7 @@
-use crate::feature::Cut;
-
-use super::Atom;
+use super::{Atom, Bridge};
 
 #[derive(Debug, PartialEq, Clone)]
 pub enum Target {
     Atom(Atom),
-    Cut(Cut),
+    Bridge(Bridge),
 }

@@ -1,9 +1,11 @@
 mod atom;
 mod bond;
-mod child;
+mod bridge;
+mod edge;
 mod target;
 
 pub use atom::Atom;
 pub use bond::Bond;
-pub use child::Child;
+pub use bridge::Bridge;
+pub use edge::Edge;
 pub use target::Target;
