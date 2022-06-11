@@ -40,6 +40,7 @@ impl std::convert::From<&Shortcut> for Element {
 impl std::convert::From<&Selection> for Element {
     fn from(element: &Selection) -> Self {
         match element {
+            Selection::B => Element::B,
             Selection::C => Element::C,
             Selection::N => Element::N,
             Selection::O => Element::O,
