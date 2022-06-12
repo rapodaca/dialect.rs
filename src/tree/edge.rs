@@ -9,6 +9,13 @@ pub enum Edge {
 }
 
 impl Edge {
+    pub fn bond_star(bond_kind: BondKind, children: Vec<Edge>) -> Self {
+        Self::Bond(Bond {
+            kind: bond_kind,
+            target: Target::Atom(Atom::star(children)),
+        })
+    }
+
     pub fn elided_star(children: Vec<Edge>) -> Self {
         Self::Bond(Bond {
             kind: BondKind::Elided,
