@@ -9,6 +9,13 @@ pub struct Atom {
 }
 
 impl Atom {
+    pub fn new(kind: &AtomKind) -> Self {
+        Self {
+            kind: kind.clone(),
+            edges: Vec::new(),
+        }
+    }
+
     pub fn star(edges: Vec<Edge>) -> Self {
         Self {
             kind: AtomKind::Star,
