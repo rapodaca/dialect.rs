@@ -2,6 +2,15 @@ use crate::feature::BondKind;
 
 #[derive(Debug, PartialEq, Clone)]
 pub struct Bond {
-    kind: BondKind,
-    tid: usize,
+    pub kind: BondKind,
+    pub tid: usize,
+}
+
+impl Bond {
+    pub fn elided(tid: usize) -> Self {
+        Self {
+            kind: BondKind::Elided,
+            tid,
+        }
+    }
 }

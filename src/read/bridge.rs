@@ -1,6 +1,6 @@
 use lyn::Scanner;
 
-use crate::tree::Bridge;
+use crate::feature::Bridge;
 
 use super::{digit, missing_character, nonzero, Error};
 

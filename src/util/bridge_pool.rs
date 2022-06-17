@@ -3,7 +3,7 @@ use std::collections::hash_map::Entry;
 use std::collections::{BinaryHeap, HashMap};
 use std::hash::{Hash, Hasher};
 
-use crate::tree::Bridge;
+use crate::feature::Bridge;
 
 #[derive(Eq, PartialEq, PartialOrd)]
 struct Index(u8);

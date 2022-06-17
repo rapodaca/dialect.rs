@@ -1,7 +1,4 @@
-use crate::{
-    feature::{AtomKind, BondKind},
-    tree::Bridge,
-};
+use crate::feature::{AtomKind, BondKind, Bridge};
 
 pub trait Follower {
     fn root(&mut self, root: &AtomKind);

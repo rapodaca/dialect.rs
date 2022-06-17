@@ -1,5 +1,5 @@
 use crate::{
-    feature::{AtomKind, BondKind},
+    feature::{AtomKind, BondKind, Bridge},
     follow::Follower,
 };
 
@@ -79,7 +79,7 @@ impl Follower for Builder {
             .push(Link::Bond(bond_kind.clone(), Atom::new(atom_kind)))
     }
 
-    fn bridge(&mut self, bond_kind: &BondKind, bridge: &super::Bridge) {
+    fn bridge(&mut self, bond_kind: &BondKind, bridge: &Bridge) {
         let head = self.head();
 
         head.edges.push(Edge::Bond(Bond {
@@ -101,7 +101,7 @@ impl Follower for Builder {
 
 #[cfg(test)]
 mod build {
-    use crate::tree::{Bridge, Edge};
+    use crate::tree::Edge;
 
     use super::*;
     use pretty_assertions::assert_eq;

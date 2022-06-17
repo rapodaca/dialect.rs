@@ -1,6 +1,6 @@
-use crate::feature::BondKind;
+use crate::feature::{BondKind, Bridge};
 
-use super::{Atom, Bond, Bridge, Target};
+use super::{Atom, Bond, Target};
 
 #[derive(Debug, PartialEq, Clone)]
 pub enum Edge {

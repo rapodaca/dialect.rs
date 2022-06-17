@@ -1,7 +1,6 @@
 use crate::{
-    feature::{AtomKind, BondKind},
+    feature::{AtomKind, BondKind, Bridge},
     follow::Follower,
-    tree::Bridge,
 };
 
 #[derive(Debug, PartialEq)]

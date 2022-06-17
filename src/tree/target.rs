@@ -1,4 +1,6 @@
-use super::{Atom, Bridge};
+use crate::feature::Bridge;
+
+use super::Atom;
 
 #[derive(Debug, PartialEq, Clone)]
 pub enum Target {

@@ -28,7 +28,7 @@ pub fn walk(root: &Atom, follower: &mut impl Follower) {
                 }
                 Target::Bridge(bridge) => {
                     follower.bridge(&bond.kind, bridge);
-                },
+                }
             },
             Edge::Gap(atom) => {
                 depth += 1;
@@ -39,7 +39,7 @@ pub fn walk(root: &Atom, follower: &mut impl Follower) {
 
                 stack.extend(edges(depth, atom));
                 follower.root(&atom.kind);
-            },
+            }
         }
     }
 }
@@ -58,9 +58,10 @@ fn edges(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::feature::{AtomKind, BondKind, Bracket, Element, Symbol};
+    use crate::feature::{
+        AtomKind, BondKind, Bracket, Bridge, Element, Symbol,
+    };
     use crate::follow::Writer;
-    use crate::tree::Bridge;
     use pretty_assertions::assert_eq;
 
     #[test]
@@ -91,9 +92,7 @@ mod tests {
 
     #[test]
     fn p2() {
-        let root = Atom::star(vec![
-            Edge::elided_star(vec![])
-        ]);
+        let root = Atom::star(vec![Edge::elided_star(vec![])]);
         let mut writer = Writer::new();
 
         walk(&root, &mut writer);
@@ -103,9 +102,7 @@ mod tests {
 
     #[test]
     fn p2_triple() {
-        let root = Atom::star(vec![
-            Edge::bond_star(BondKind::Triple, vec![])
-        ]);
+        let root = Atom::star(vec![Edge::bond_star(BondKind::Triple, vec![])]);
         let mut writer = Writer::new();
 
         walk(&root, &mut writer);
@@ -128,10 +125,8 @@ mod tests {
 
     #[test]
     fn p2_p1_branch_center() {
-        let root = Atom::star(vec![
-            Edge::gap_star(vec![]),
-            Edge::elided_star(vec![]),
-        ]);
+        let root =
+            Atom::star(vec![Edge::gap_star(vec![]), Edge::elided_star(vec![])]);
         let mut writer = Writer::new();
 
         walk(&root, &mut writer);
@@ -141,11 +136,10 @@ mod tests {
 
     #[test]
     fn p3_terminal() {
-        let root =Atom::star(vec![
-            Edge::elided_star(vec![
-                Edge::elided_star(vec![])
-            ])
-        ]);
+        let root =
+            Atom::star(vec![Edge::elided_star(vec![Edge::elided_star(
+                vec![],
+            )])]);
         let mut writer = Writer::new();
 
         walk(&root, &mut writer);
@@ -157,11 +151,9 @@ mod tests {
     fn c3() {
         let root = Atom::star(vec![
             Edge::elided_bridge(Bridge::B1),
-            Edge::elided_star(vec![
-                Edge::elided_star(vec![
-                    Edge::elided_bridge(Bridge::B1)
-                ])
-            ])
+            Edge::elided_star(vec![Edge::elided_star(vec![
+                Edge::elided_bridge(Bridge::B1),
+            ])]),
         ]);
         let mut writer = Writer::new();
 
@@ -173,14 +165,10 @@ mod tests {
     #[test]
     fn c4() {
         let root = Atom::star(vec![
-            Edge::elided_star(vec![
-                Edge::elided_star(vec![
-                    Edge::elided_star(vec![
-                        Edge::elided_bridge(Bridge::B1)
-                    ])
-                ])
-            ]),
-            Edge::elided_bridge(Bridge::B1)
+            Edge::elided_star(vec![Edge::elided_star(vec![
+                Edge::elided_star(vec![Edge::elided_bridge(Bridge::B1)]),
+            ])]),
+            Edge::elided_bridge(Bridge::B1),
         ]);
         let mut writer = Writer::new();
 
@@ -191,12 +179,10 @@ mod tests {
 
     #[test]
     fn s3_terminal() {
-        let root = Atom::star(vec![
-            Edge::elided_star(vec![
-                Edge::elided_star(vec![]),
-                Edge::elided_star(vec![])
-            ]),
-        ]);
+        let root = Atom::star(vec![Edge::elided_star(vec![
+            Edge::elided_star(vec![]),
+            Edge::elided_star(vec![]),
+        ])]);
         let mut writer = Writer::new();
 
         walk(&root, &mut writer);
@@ -206,13 +192,11 @@ mod tests {
 
     #[test]
     fn s4_terminal() {
-        let root = Atom::star(vec![
-            Edge::elided_star(vec![
-                Edge::elided_star(vec![]),
-                Edge::elided_star(vec![]),
-                Edge::elided_star(vec![])
-            ]),
-        ]);
+        let root = Atom::star(vec![Edge::elided_star(vec![
+            Edge::elided_star(vec![]),
+            Edge::elided_star(vec![]),
+            Edge::elided_star(vec![]),
+        ])]);
         let mut writer = Writer::new();
 
         walk(&root, &mut writer);
