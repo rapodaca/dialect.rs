@@ -15,7 +15,7 @@ impl Ord for Index {
 }
 
 #[derive(Debug, Eq)]
-struct Pair(u32, u32);
+struct Pair(usize, usize);
 
 impl PartialEq for Pair {
     fn eq(&self, other: &Self) -> bool {
@@ -45,7 +45,7 @@ impl BridgePool {
         }
     }
 
-    pub fn hit(&mut self, sid: u32, tid: u32) -> Bridge {
+    pub fn hit(&mut self, sid: usize, tid: usize) -> Bridge {
         let next = match self.replaced.pop() {
             Some(next) => next.0,
             None => {

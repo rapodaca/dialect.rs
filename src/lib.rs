@@ -3,4 +3,3 @@ pub mod follow;
 pub mod graph;
 pub mod read;
 pub mod tree;
-pub mod util;

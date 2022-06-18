@@ -1,4 +1,4 @@
-use std::{collections::HashMap};
+use std::collections::HashMap;
 
 use crate::{
     feature::{AtomKind, BondKind, Bridge},
@@ -12,7 +12,7 @@ pub struct Builder {
     atoms: Vec<Atom>,
     head: Option<usize>,
     stack: Vec<usize>,
-    bridges: HashMap<Bridge, (usize, usize, BondKind)>
+    bridges: HashMap<Bridge, (usize, usize, BondKind)>,
 }
 
 impl Builder {
@@ -21,7 +21,7 @@ impl Builder {
             atoms: Vec::new(),
             stack: Vec::new(),
             head: None,
-            bridges: HashMap::new()
+            bridges: HashMap::new(),
         }
     }
 
@@ -67,22 +67,25 @@ impl Follower for Builder {
 
                 source.bonds.push(Bond {
                     kind: source_kind.clone(),
-                    tid
+                    tid,
                 });
 
                 let target = self.atoms.get_mut(tid).expect("target");
 
-                target.bonds.insert(iid, Bond {
-                    kind: target_kind,
-                    tid: sid
-                })
-            },
+                target.bonds.insert(
+                    iid,
+                    Bond {
+                        kind: target_kind,
+                        tid: sid,
+                    },
+                )
+            }
             std::collections::hash_map::Entry::Vacant(vacant) => {
                 let head = self.head.expect("head");
                 let insertion = self.atoms.get(head).expect("head").bonds.len();
 
                 vacant.insert((head, insertion, source_kind.clone()));
-            },
+            }
         }
     }
 

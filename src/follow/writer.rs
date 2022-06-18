@@ -109,6 +109,17 @@ mod write {
     }
 
     #[test]
+    fn p1_p2() {
+        let mut writer = Writer::new();
+
+        writer.root(&AtomKind::Star);
+        writer.root(&AtomKind::Star);
+        writer.extend(&BondKind::Elided, &AtomKind::Star);
+
+        assert_eq!(writer.write(), "*.**")
+    }
+
+    #[test]
     fn p3() {
         let mut writer = Writer::new();
 

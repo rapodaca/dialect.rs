@@ -13,4 +13,11 @@ impl Bond {
             tid,
         }
     }
+
+    pub fn triple(tid: usize) -> Self {
+        Self {
+            kind: BondKind::Triple,
+            tid
+        }
+    }
 }
