@@ -1,5 +1,7 @@
 # Dialect Reference Implementation
 
+**This repository has been superseded by [Balsa](https://github.com/metamolecular/balsa). It has been left here for documentation purposes only.**
+
 Primitives for reading and writing [Dialect](https://github.com/rapodaca/dialect), a molecular language related to SMILES.
 
 Dialect.rs is based on [Purr](https://github.com/rapodaca/purr).
